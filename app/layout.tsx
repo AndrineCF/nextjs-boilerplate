@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Pathway_Extreme } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const pathwayExtreme = Pathway_Extreme({
   variable: "--font-pathway",
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={`${pathwayExtreme.variable} antialiased`}>
         <Navbar />
         {children}
+         <Footer />
       </body>
     </html>
   );
