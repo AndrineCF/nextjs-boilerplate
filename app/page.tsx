@@ -40,8 +40,27 @@ export default function Home() {
       </section>
       
       <section className="flex flex-col w-full items-center px-6 py-16 gap-12 bg-light-yellow">
+        <div className="flex items-center justify-between bg-white rounded-xl border border-black p-8 max-w-2xl w-full gap-8">
+          
+          {/* Tekst venstre */}
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold">Test vårt verktøy her!</h2>
+            <p className="text-zinc-600">
+              Utforsk hvilke planter som passer best for ditt tak. Velg et område og få forslag til lokal flora som bidrar til biologisk mangfold og et grønnere bymiljø.
+            </p>
+            <a href="/flora-kart" className="text-lg font-bold hover:text-brand-green transition-colors">
+              Trykk her →
+            </a>
+          </div>
 
-      </section>
+          {/* Ikon høyre */}
+          <div className="flex-shrink-0">
+            <Image src="/ikoner/verktoy.png" alt="" width={120} height={120} />
+          </div>
+
+        </div>
+    </section>
+    
       <section className="flex flex-col w-full items-center px-6 py-16 gap-12">
 
       </section>
