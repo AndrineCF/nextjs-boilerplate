@@ -28,19 +28,19 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <h3 className="font-bold text-brand-green">Kontakt</h3>
               <a href="mailto:kontakt@grøntak.no" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-brand-green transition-colors">
-                <Image src="/ikoner/email.png" alt="" width={24} height={24} />
+                <Image src="/ikoner/email.png" alt="" width={44} height={44} />
                 kontakt@grøntak.no
               </a>
               <a href="tel:34243242" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-brand-green transition-colors">
-                <Image src="/ikoner/telefon.png" alt="" width={24} height={24} />
+                <Image src="/ikoner/telefon.png" alt="" width={44} height={44}  />
                 34243242
               </a>
               <span className="flex items-center gap-2 text-sm text-zinc-700">
-                <Image src="/ikoner/kart.png" alt="" width={24} height={24} />
+                <Image src="/ikoner/kart.png" alt="" width={44} height={44}  />
                 Gløshaug 1, 7030 Trondheim
               </span>
               <span className="flex items-center gap-2 text-sm text-zinc-700">
-                <Image src="/ikoner/klokke.png" alt="" width={24} height={24} />
+                <Image src="/ikoner/klokke.png" alt="" width={44} height={44} />
                 man-fre 9-18
               </span>
             </div>

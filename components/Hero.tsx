@@ -11,15 +11,14 @@ interface HeroProps {
 export default function Hero({ title, description, tagline, imageSrc, imageAlt }: HeroProps) {
   return (
     <section
-      className="w-full items-center px-6 py-12 min-h-screen md:min-h-[600px] md:px-20 md:py-16"
+      className="flex flex-row w-full items-center px-6 py-12 min-h-screen md:min-h-[600px] md:px-20 md:py-16"
       style={{
         backgroundImage: `url('/bakgrunn.png')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Innhold */}
-      <div className="relative z-10 flex flex-col gap-8 w-full md:flex-row md:gap-16 md:max-w-7xl md:mx-auto">
+      <div className="relative z-10 flex flex-col gap-6 w-full md:flex-row md:gap-16 md:max-w-7xl md:mx-auto">
 
         {/* Bilde venstre */}
         <Image
@@ -29,6 +28,10 @@ export default function Hero({ title, description, tagline, imageSrc, imageAlt }
           height={400}
           className="rounded-lg flex-shrink-0 hidden md:block"
         />
+      </div>
+      {/* Innhold */}
+      <div className="relative z-10 flex flex-col gap-6 w-full md:flex-row md:gap-16 md:max-w-7xl md:mx-auto">
+
 
         {/* Tekst høyre */}
         <div className="flex flex-col gap-4 text-black text-center md:text-left">
