@@ -24,6 +24,27 @@ export default function Home() {
               />
               <div className="text-center">Lokal tilpasning</div>
           </div>
+          <div className="items-center">
+            <Image
+              src={"/ikoner/plante.png"}
+              alt={""}
+              width={400}
+              height={400}
+              className="rounded-lg"
+              />
+              <div className="text-center">Lokal tilpasning</div>
+          </div>
+
+          <div className="items-center">
+            <Image
+              src={"/ikoner/kart.png"}
+              alt={""}
+              width={400}
+              height={400}
+              className="rounded-lg"
+              />
+              <div className="text-center">Lokal tilpasning</div>
+          </div>
 
         </div>
 
