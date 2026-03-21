@@ -5,6 +5,7 @@
   --foreground: #171717;
   --dark-green: #00272B;
   --light-green: #D5FAC2;
+  --light-yellow: #FFECB7
 }
 
 @theme inline {
@@ -12,6 +13,7 @@
   --color-foreground: var(--foreground);
   --color-dark-green: var(--dark-green);
   --color-light-green: var(--light-green);
+  --color-light-yellow: var(--light-yellow);
   --font-sans: var(--font-pathway); /* Standard font */
 }
 
