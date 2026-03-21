@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
-import { Pathway_Extreme } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {pathwayExtreme} from "@/components/ui/fonts";
 
-const pathwayExtreme = Pathway_Extreme({
-  variable: "--font-pathway",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "GrøntTak",
