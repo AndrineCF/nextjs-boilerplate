@@ -27,8 +27,10 @@ export default function Footer() {
             </div>
             <div className="flex flex-col gap-2">
               <h3 className="font-bold text-brand-green mb-1">Kontakt</h3>
-              <a href="mailto:hei@grøntak.no" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">hei@grøntak.no</a>
-              <Link href="/kontakt" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">Kontaktskjema</Link>
+              <a href="mailto:kontakt@grøntak.no" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">hei@grøntak.no</a>
+              <a href="mailto:kontakt@grøntak.no" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">34243242</a>
+              <a href="mailto:kontakt@grøntak.no" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">Gløshaug 1, 7030 trondheim</a>
+              <a href="mailto:kontakt@grøntak.no" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">man-fre 9-18</a>
             </div>
           </div>
         </div>

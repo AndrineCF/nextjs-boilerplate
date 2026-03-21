@@ -15,9 +15,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="no">
-      <body className={`${pathwayExtreme.variable} antialiased`}>
+      <body className={`min-h-screen flex flex-col ${pathwayExtreme.variable} antialiased`}>
         <Navbar />
-        {children}
+        <main className="flex-1">
+          {children}
+        </main>
          <Footer />
       </body>
     </html>
