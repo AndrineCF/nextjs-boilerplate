@@ -7,7 +7,7 @@ export default function Home() {
       <section
       className="flex flex-col w-full items-center px-6 py-12 min-h-screen md:min-h-[600px] md:px-20 md:py-16"
       style={{
-        backgroundImage: `url('/bakgrunn.png')`,
+        backgroundImage: `url('/img/bakgrunn.png')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -17,7 +17,7 @@ export default function Home() {
 
         {/* Bilde venstre */}
         <Image
-          src="/bygging.png"
+          src="/img/bygging.png"
           alt="Grønt tak"
           width={500}
           height={400}

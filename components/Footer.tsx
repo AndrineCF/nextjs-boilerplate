@@ -11,7 +11,7 @@ export default function Footer() {
 
           {/* Logo + tagline - venstre */}
           <div className="flex flex-col gap-3">
-            <Image src="/logo.svg" alt="GrøntTak logo" width={120} height={40} />
+            <Image src="/logoer/full-logo.svg" alt="GrøntTak logo" width={120} height={40} />
             <p className="text-sm text-zinc-600 max-w-xs">
               Gjør taket grønt — for miljøet, biologisk mangfold og fremtiden.
             </p>

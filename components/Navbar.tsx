@@ -14,7 +14,7 @@ export default function Navbar() {
         
         {/* Logo - venstre */}
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="GrøntTak logo" width={140} height={45} />
+          <Image src="/logoer/full-logo.svg" alt="GrøntTak logo" width={140} height={45} />
         </Link>
 
         {/* Høyre side */}
