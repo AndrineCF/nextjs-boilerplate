@@ -1,16 +1,39 @@
-import Hero from "@/components/Hero";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <main className="w-full">
-      <Hero
-        title="Gjør taket grønt med oss!"
-        description="Med GrøntTak får du oversikt over lokal flora, anbefalinger for samplanting og miljøeffekt. Planlegg et grønt tak som styrker biologisk mangfold."
-        tagline="Velg område. Få forslag. Bygg grønnere."
-        imageSrc="/bygging.png"
-        imageAlt="Grønt tak"
-      />
+
+      <section
+      className="flex flex-col w-full items-center px-6 py-12 min-h-screen md:min-h-[600px] md:px-20 md:py-16"
+      style={{
+        backgroundImage: `url('/bakgrunn.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Innhold */}
+      <div className="relative z-10 flex flex-col gap-8 w-full md:flex-row md:gap-16 md:max-w-7xl md:mx-auto">
+
+        {/* Bilde venstre */}
+        <Image
+          src="/bygging.png"
+          alt="Grønt tak"
+          width={500}
+          height={400}
+          className="rounded-lg flex-shrink-0 hidden md:block"
+        />
+
+        {/* Tekst høyre */}
+        <div className="flex flex-col gap-4 text-black text-center md:text-left">
+          <h1 className="text-3xl font-bold md:text-4xl">"Gjør taket grønt med oss!</h1>
+          <p className="text-base leading-relaxed md:text-lg">Med GrøntTak får du oversikt over lokal flora, anbefalinger for samplanting og miljøeffekt. Planlegg et grønt tak som styrker biologisk mangfold.</p>
+          <p className="italic text-base md:text-lg md:text-right">Velg område. Få forslag. Bygg grønnere.</p>
+        </div>
+
+      </div>
+    </section>
+
       <section className="flex flex-col w-full items-center px-6 py-16 gap-12">
         
         <h2 className="text-3xl font-bold">Fremtidens tak er grønne</h2>

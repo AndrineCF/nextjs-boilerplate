@@ -3,41 +3,33 @@ import Image from "next/image";
 interface HeroProps {
   title: string;
   description: string;
-  tagline: string;
   imageSrc: string;
   imageAlt: string;
+  tagline?: string;
 }
 
-export default function Hero({ title, description, tagline, imageSrc, imageAlt }: HeroProps) {
+export default function Hero({ title, description, imageSrc, imageAlt, tagline }: HeroProps) {
   return (
-    <section
-      className="flex flex-col w-full items-center px-6 py-12 min-h-screen md:min-h-[600px] md:px-20 md:py-16"
-      style={{
-        backgroundImage: `url('/bakgrunn.png')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Innhold */}
-      <div className="relative z-10 flex flex-col gap-8 w-full md:flex-row md:gap-16 md:max-w-7xl md:mx-auto">
+    <section className="relative w-full bg-light-green flex items-end px-16 py-16 min-h-[450px]">
+      
+      {/* Tekst venstre */}
+      <div className="flex flex-col gap-6 max-w-lg z-10">
+        <h1 className="text-4xl font-bold">{title}</h1>
+        <p className="text-lg leading-relaxed text-zinc-700">{description}</p>
+        {tagline && <p className="italic text-lg">{tagline}</p>}
+      </div>
 
-        {/* Bilde venstre */}
+      {/* Bilde høyre - mot bunnen */}
+      <div className="absolute bottom-0 right-16">
         <Image
           src={imageSrc}
           alt={imageAlt}
           width={500}
-          height={400}
-          className="rounded-lg flex-shrink-0 hidden md:block"
+          height={350}
+          className="object-contain"
         />
-
-        {/* Tekst høyre */}
-        <div className="flex flex-col gap-4 text-black text-center md:text-left">
-          <h1 className="text-3xl font-bold md:text-4xl">{title}</h1>
-          <p className="text-base leading-relaxed md:text-lg">{description}</p>
-          <p className="italic text-base md:text-lg md:text-right">{tagline}</p>
-        </div>
-
       </div>
+
     </section>
   );
 }
