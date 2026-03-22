@@ -67,21 +67,27 @@ plantearter som kan fungere på grønne tak i Trondheim. For hver art er det lag
       <section className="flex flex-col w-full items-center px-6 py-16 gap-12 bg-light-yellow">
         <h2 className="text-3xl font-bold">Våre verdier</h2>
         <div className="flex flex-row justify-center gap-24">
+
+          <div className="flex flex-col items-center gap-4">
+            <Image src="/ikoner/stedegenNatur.svg" alt="" width={300} height={300}  />
+            <span className="text-lg text-center">Stedegen natur</span>
+          </div>
                 
           <div className="flex flex-col items-center gap-4">
-            <Image src="/ikoner/kart.png" alt="" width={350} height={350} />
-            <span className="text-lg">Lokal tilpasning</span>
+            <Image src="/ikoner/stedstilpassede.svg" alt="" width={300} height={300} />
+            <span className="text-lg text-center">Biologisk mangfold</span>
           </div>
       
           <div className="flex flex-col items-center gap-4">
-            <Image src="/ikoner/plante.png" alt="" width={350} height={350}  />
-            <span className="text-lg">Smarte plantevalg</span>
+            <Image src="/ikoner/bymiljo.svg" alt="" width={300} height={300}  />
+            <span className="text-lg text-center">Bedre bymiljø</span>
           </div>
       
           <div className="flex flex-col items-center gap-4">
-            <Image src="/ikoner/jordklode.png" alt="" width={350} height={350}  />
-            <span className="text-lg">Miljøgevinst</span>
+            <Image src="/ikoner/stedstilpassede.svg" alt="" width={300} height={300}  />
+            <span className="text-lg text-center">Stedstilpassede løsninger</span>
           </div>
+
         </div>
       </section>
 
