@@ -10,23 +10,29 @@ interface HeroProps {
 
 export default function Hero({ title, description, imageSrc, imageAlt, tagline }: HeroProps) {
   return (
-    <section className="relative w-full bg-light-green flex items-end px-16 py-16 min-h-[450px]">
+    <section className="relative w-full flex items-end px-16 py-20 lg:px-24 lg:py-48  2xl:px-44 min-h-[450px] lg:min-h-[600px]"
+      style={{
+        backgroundImage: `url('/img/bakgrunn.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       
       {/* Tekst venstre */}
-      <div className="flex flex-col gap-6 max-w-lg z-10">
-        <h1 className="text-4xl font-bold">{title}</h1>
+      <div className="flex flex-col gap-10 max-w-xl lg:max-w-2xl 2xl:max-w-3xl z-10">
+        <h1 className="text-4xl lg:text-5xl 2xl:text-6xl font-bold">{title}</h1>
         <p className="text-lg leading-relaxed text-zinc-700">{description}</p>
         {tagline && <p className="italic text-lg">{tagline}</p>}
       </div>
 
       {/* Bilde høyre - mot bunnen */}
-      <div className="absolute bottom-0 right-16">
+      <div className="absolute bottom-0 right-30">
         <Image
           src={imageSrc}
           alt={imageAlt}
           width={500}
           height={350}
-          className="object-contain"
+          className="rounded-lg flex-shrink-0 hidden md:block"
         />
       </div>
 
