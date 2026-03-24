@@ -23,6 +23,7 @@ export default function Footer() {
               <h3 className="font-bold text-brand-green">Utforsk</h3>
               <Link href="/flora-kart" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">FloraKart</Link>
               <Link href="/om-prosjektet" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">Om prosjektet</Link>
+              <Link href="/om-verktoy" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">Om verktøy</Link>
               <Link href="/faq" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">FAQ</Link>
             </div>
             <div className="flex flex-col gap-3">

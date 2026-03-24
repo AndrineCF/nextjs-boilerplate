@@ -42,7 +42,7 @@ export default function OmProsjektet() {
 
       <section className="flex flex-col w-full items-center px-60 py-20 gap-12 bg-light-yellow">
          <div className="flex flex-col gap-4">
-          <h2 className="text-3xl font-bold ">Miljøgevinst</h2>
+          <h2 className="text-3xl font-bold text-center">Miljøgevinst</h2>
           <div className="w-full h-1 bg-dark-green" />
           <div className="flex flex-col gap-4">
             <p className="text-lg leading-relaxed text-zinc-700">
@@ -64,7 +64,7 @@ export default function OmProsjektet() {
 
         {/* Tekst høyre */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-3xl font-bold">Smarte plantevalg </h2>
+          <h2 className="text-3xl font-bold">Smarte plantevalg</h2>
           <div className="w-full h-1 bg-dark-green" />
             <p className="text-lg leading-relaxed text-zinc-700">
             Valg av planter til grønne tak påvirkes av flere forhold og er avgjørende for om taket blir robust og enkelt å drifte. Med riktig artsvalg tilpasset sol, vind, jorddybde og fuktighet får du bedre etablering, jevnere dekke og mindre behov for vanning og etterplanting.
@@ -77,8 +77,8 @@ export default function OmProsjektet() {
         {/* Bilde venstre */}
         <div className="flex-shrink-0">
           <Image
-            src="/img/Plantevalgapp.png"
-            alt="Plantevalgapp med solskinn og luft"
+            src="/img/smartPlante.png"
+            alt="Grønne tak og smarte valg"
             width={600}
             height={600}
             className="rounded-lg object-cover"
