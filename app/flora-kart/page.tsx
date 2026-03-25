@@ -7,7 +7,7 @@ interface Message {
   content: string;
 }
 
-export default function Chat() {
+export default function FloraKart() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,18 +33,30 @@ export default function Chat() {
   }
 
   return (
-    <main className="flex flex-col h-screen max-w-3xl mx-auto px-6 py-8 gap-4">
-      
-      <h1 className="text-2xl font-bold">Chat</h1>
+    <main className="flex flex-col h-screen px-16 py-8 gap-6 2xl:px-32">
+
+      {/* Topp */}
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-bold">FloraKart</h1>
+        <p className="text-zinc-600">Spør om hvilke planter som passer for ditt grønne tak i Trondheim.</p>
+      </div>
 
       {/* Meldinger */}
-      <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
+      <div className="flex-1 flex flex-col gap-4 overflow-y-auto bg-zinc-50 rounded-xl p-6">
+        {messages.length === 0 && (
+          <div className="flex flex-col gap-3 text-zinc-400 text-sm">
+            <p>Eksempelspørsmål:</p>
+            <button onClick={() => setInput("Hvilke planter passer på et solrikt tak?")} className="text-left hover:text-brand-green transition-colors">→ Hvilke planter passer på et solrikt tak?</button>
+            <button onClick={() => setInput("Hvilke planter trenger lite jorddybde?")} className="text-left hover:text-brand-green transition-colors">→ Hvilke planter trenger lite jorddybde?</button>
+            <button onClick={() => setInput("Hvilke planter er bra for pollinatorer?")} className="text-left hover:text-brand-green transition-colors">→ Hvilke planter er bra for pollinatorer?</button>
+          </div>
+        )}
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`px-4 py-3 rounded-xl max-w-xl ${
+            className={`px-4 py-3 rounded-xl max-w-2xl ${
               msg.role === "user"
-                ? "bg-brand-green text-white self-end"
+                ? "bg-dark-green text-white self-end"
                 : "bg-light-green self-start"
             }`}
           >
@@ -65,12 +77,12 @@ export default function Chat() {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && sendMessage()}
-          placeholder="Skriv en melding..."
-          className="flex-1 border border-zinc-300 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-green"
+          placeholder="Spør om planter for ditt tak..."
+          className="flex-1 border border-zinc-300 rounded-xl px-4 py-3 focus:outline-none focus:border-dark-green"
         />
         <button
           onClick={sendMessage}
-          className="bg-brand-green text-white px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
+          className="bg-dark-green text-white px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
         >
           Send
         </button>

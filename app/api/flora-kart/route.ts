@@ -18,10 +18,12 @@ export async function POST(request: Request) {
   const context = documents?.map((d: { content: string }) => d.content).join("\n") ?? "";
 
   // Send til LLM med kontekst
-  const response = await LLM.invoke(message,
-    `Du er en hjelpsom assistent for GrøntTak. 
-    Bruk denne informasjonen til å svare: 
-    ${context}`
+  const response = await LLM.invoke(
+    message,
+    `Du er en hjelpsom assistent for GrøntTak som hjelper folk velge riktige planter for grønne tak i Trondheim.
+    Svar på norsk. Bruk denne planteinformasjonen til å svare:
+    ${context}
+    Hvis du ikke finner relevant informasjon, si at du ikke har data om det.`
   );
 
   return Response.json({ response });
