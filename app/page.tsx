@@ -71,7 +71,7 @@ export default function Home() {
             <p className="text-zinc-600">
               Utforsk hvilke planter som passer best for ditt tak. Velg et område og få forslag til lokal flora som bidrar til biologisk mangfold og et grønnere bymiljø.
             </p>
-            <a href="/flora-kart" className="text-lg font-bold hover:text-brand-green transition-colors">
+            <a href="/om-verktoy" className="text-lg font-bold hover:text-brand-green transition-colors">
               Trykk her →
             </a>
           </div>
