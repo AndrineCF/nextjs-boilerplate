@@ -20,7 +20,7 @@ export default function Chat() {
     setInput("");
     setLoading(true);
 
-    const response = await fetch("/api/chat", {
+    const response = await fetch("/api/flora-kart", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: input }),
