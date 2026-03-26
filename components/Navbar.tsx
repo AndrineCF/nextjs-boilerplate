@@ -40,7 +40,6 @@ export default function Navbar() {
             <Link href="/flora-kart" className="block px-4 py-2 text-zinc-700 hover:bg-green-50 hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>FloraKart</Link>
             <Link href="/om-prosjektet" className="block px-4 py-2 text-zinc-700 hover:bg-green-50 hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>Om Prosjektet</Link>
             <Link href="/om-verktoy" className="block px-4 py-2 text-zinc-700 hover:bg-green-50 hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>Om Verktøy</Link>
-            <Link href="/faq" className="block px-4 py-2 text-zinc-700 hover:bg-green-50 hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>FAQ</Link>
           </div>
         )}
       </div>
