@@ -20,16 +20,28 @@ export default function FloraKart() {
     setInput("");
     setLoading(true);
 
-    const response = await fetch("/api/flora-kart", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input }),
-    });
+    try {
+      const response = await fetch("/api/flora-kart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
 
-    const data = await response.json();
-    const assistantMessage: Message = { role: "assistant", content: data.response };
-    setMessages(prev => [...prev, assistantMessage]);
-    setLoading(false);
+      const data = await response.json();
+
+      if (data.error) {
+        const errorMessage: Message = { role: "assistant", content: `Feil: ${data.error}` };
+        setMessages(prev => [...prev, errorMessage]);
+      } else {
+        const assistantMessage: Message = { role: "assistant", content: data.response };
+        setMessages(prev => [...prev, assistantMessage]);
+      }
+    } catch (error) {
+      const errorMessage: Message = { role: "assistant", content: `Noe gikk galt. Prøv igjen.` };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
