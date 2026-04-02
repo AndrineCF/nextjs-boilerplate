@@ -3,7 +3,7 @@ import { getSupabase } from "@/lib/supabase";
 
 export async function POST(request: Request) {
   try {
-    const supabase = getSupabase();
+    const supabase = await getSupabase();
     const { message } = await request.json();
 
     const queryEmbedding = await EMBEDDING_MODEL.embedText(message);
