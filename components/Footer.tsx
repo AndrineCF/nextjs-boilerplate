@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-light-green mt-16">
+    <footer className="w-full bg-light-green">
       <div className="px-10 py-12 flex flex-col gap-10">
 
         {/* Topp: logo + lenker */}
