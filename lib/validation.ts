@@ -26,5 +26,13 @@ export const registerSchema = z.object({
   path: ["confirmPassword"],
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .min(1, "E-post er påkrevd")
+    .email("Ugyldig e-postadresse"),
+});
+
+export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;

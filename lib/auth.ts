@@ -36,3 +36,13 @@ export async function getUser() {
   const { data } = await supabase.auth.getUser();
   return data.user;
 }
+
+export async function resetPassword(email: string) {
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}/oppdater-passord`,
+  });
+
+  if (error) throw new Error("Kunne ikke sende e-post. Prøv igjen.");
+}
