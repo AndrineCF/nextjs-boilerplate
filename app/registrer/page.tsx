@@ -152,16 +152,20 @@ export default function Registrer() {
 
           </div>
 
+          <div className="flex items-center gap-4">
+            <div className="flex-1 h-px bg-zinc-200" />
+            <span className="text-sm text-zinc-400">eller</span>
+            <div className="flex-1 h-px bg-zinc-200" />
+          </div>
+
           <div className="flex flex-col items-center gap-2">
+            <p className="text-sm text-zinc-500">Har du allerede en konto?</p>
             <Link href="/login" className="w-full border-2 border-dark-green text-dark-green font-semibold py-3.5 rounded-xl hover:bg-light-green transition-all text-center">
               Logg inn
             </Link>
-            <p className="text-sm text-zinc-500">Har du allerede en konto?</p>
           </div>
 
         </div>
-
-        <p className="text-xs text-zinc-400">© 2025 GrøntTak. Alle rettigheter reservert.</p>
 
       </div>
 

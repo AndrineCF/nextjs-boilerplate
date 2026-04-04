@@ -37,11 +37,7 @@ export default function Login() {
     <main className="flex min-h-screen">
 
       {/* Venstre side */}
-      <div className="flex flex-col w-full max-w-xl px-16 py-12 justify-between">
-
-        <Link href="/">
-          <Image src="/logoer/full-logo.svg" alt="GrøntTak" width={160} height={50} />
-        </Link>
+      <div className="flex flex-col w-full max-w-xl px-16 py-30 justify-between">
 
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
@@ -134,21 +130,20 @@ export default function Login() {
           </div>
 
           <div className="flex flex-col items-center gap-2">
+            <p className="text-sm text-zinc-500">Har du ikke en konto ennå?</p>
             <Link href="/registrer" className="w-full border-2 border-dark-green text-dark-green font-semibold py-3.5 rounded-xl hover:bg-light-green transition-all text-center">
               Registrer ny bruker
             </Link>
-            <p className="text-sm text-zinc-500">Har du ikke en konto ennå?</p>
           </div>
 
         </div>
 
-        <p className="text-xs text-zinc-400">© 2025 GrøntTak. Alle rettigheter reservert.</p>
 
       </div>
 
       {/* Høyre side - bilde */}
       <div className="flex-1 relative hidden md:block">
-        <Image src="/img/login.jpg" alt="Grønt tak" fill className="object-cover" />
+        <Image src="/img/login.png" alt="Grønt tak" fill className="object-cover" />
         <div className="absolute inset-0 bg-dark-green/40 flex flex-col justify-end p-16">
           <blockquote className="text-white text-2xl font-semibold max-w-sm leading-relaxed">
             "Fremtidens byer er grønne — start med taket."
