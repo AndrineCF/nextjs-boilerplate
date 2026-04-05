@@ -75,7 +75,8 @@ export default function Navbar() {
         {menuOpen && (
           <div className="absolute top-full right-10 mt-1 w-48 bg-white rounded-lg shadow-lg border border-zinc-100 py-2">
             <Link href="/flora-kart" className="block px-4 py-2 text-zinc-700 hover:bg-light-green hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>FloraKart</Link>
-            <Link href="/om-prosjektet" className="block px-4 py-2 text-zinc-700 hover:bg-light-green hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>Om oss</Link>
+            <Link href="/om-prosjektet" className="block px-4 py-2 text-zinc-700 hover:bg-light-green hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>Om Grønttak</Link>
+            <Link href="/om-verktoy" className="block px-4 py-2 text-zinc-700 hover:bg-light-green hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>Om verktøyet</Link>
             <Link href="/faq" className="block px-4 py-2 text-zinc-700 hover:bg-light-green hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>FAQ</Link>
             {profile ? (
               <Link href="/profil" className="block px-4 py-2 text-zinc-700 hover:bg-light-green hover:text-brand-green font-medium transition-colors" onClick={() => setMenuOpen(false)}>Min profil</Link>
