@@ -1,11 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
 import { getUser } from "@/lib/auth";
 
-export interface Settings {
-  navn: string;
-  email: string;
-}
-
 export async function updateNavn(navn: string) {
   const user = await getUser();
   if (!user) throw new Error("Ikke innlogget");

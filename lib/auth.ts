@@ -13,15 +13,29 @@ export async function loginUser(email: string, password: string) {
   return data;
 }
 
-export async function registerUser(email: string, password: string) {
+export async function registerUser(
+  email: string,
+  password: string,
+  fornavn: string,
+  etternavn: string,
+  telefon?: string,
+  organisasjon?: string,
+) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
-
+  const { data, error } = await supabase.auth.signUp({ email, password });
   if (error) throw new Error("Kunne ikke registrere bruker. Prøv igjen.");
+
+  if (data.user) {
+    await supabase
+      .from("profiles")
+      .update({
+        navn: `${fornavn} ${etternavn}`,
+        telefon: telefon || null,
+        organisasjon: organisasjon || null,
+      })
+      .eq("id", data.user.id);
+  }
 
   return data;
 }
