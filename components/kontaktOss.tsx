@@ -1,40 +1,50 @@
 import Image from "next/image";
+import Logo from "@/components/Logo";
 
 export default function KontaktOss() {
   return (
-   <section className="flex flex-col w-full items-center px-6 py-16 gap-12">
+    <section className="w-full px-4 py-12 md:px-6 md:py-16">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 md:gap-12">
+        <h2 className="text-center text-2xl font-bold md:text-3xl">
+          Har du spørsmål? Ta kontakt med oss!
+        </h2>
 
-      <h2 className="text-3xl font-bold">Har du spørsmål? Ta kontakt med oss!</h2>
-
-      <div className="flex items-center justify-center gap-24 w-full">
-
-        {/* Bilde venstre */}
-        <Image src="/img/kontakt.png" alt="" width={400} height={400} />
-
-        {/* Kontaktinfo høyre */}
-        <div className="flex flex-col w-80">
-
-          <div className="flex items-center gap-4 py-4 border-b border-zinc-200">
-            <Image src="/ikoner/telefon.png" alt="" width={70} height={70} />
-            <span className="text-lg">34243242</span>
+        <div className="flex w-full flex-col items-center gap-10 md:flex-row md:items-center md:justify-center md:gap-16 lg:gap-24">
+          {/* Bilde */}
+          <div className="w-full max-w-sm">
+            <Image
+              src="/img/kontakt.png"
+              alt="Kontakt oss"
+              width={400}
+              height={400}
+              className="rounded-lg flex-shrink-0 hidden md:block"
+            />
           </div>
 
-          <div className="flex items-center gap-4 py-4 border-b border-zinc-200">
-            <Image src="/ikoner/kart.png" alt="" width={70} height={70} />
-            <span className="text-lg">Gløshaug 1, 7030 Trondheim</span>
-          </div>
+          {/* Kontaktinfo */}
+          <div className="w-full max-w-md">
+            <div className="flex items-center gap-4 border-b border-zinc-200 py-4">
+                <Logo width={70} imageSrc="/ikoner/telefon.png" imageAlt=""/>
+                <span className="text-base md:text-lg">34243242</span>
+            </div>
 
-          <div className="flex items-center gap-4 py-4 border-b border-zinc-200">
-            <Image src="/ikoner/email.png" alt="" width={70} height={70} />
-            <span className="text-lg">kundservice@grøntak.no</span>
-          </div>
+            <div className="flex items-center gap-4 border-b border-zinc-200 py-4">
+                <Logo width={70} imageSrc="/ikoner/kart.png" imageAlt=""/>
+                <span className="text-base md:text-lg">Gløshaug 1, 7030 Trondheim </span>
+            </div>
 
-          <div className="flex items-center gap-4 py-4 border-b border-zinc-200">
-            <Image src="/ikoner/klokke.png" alt="" width={70} height={70} />
-            <span className="text-lg">man-fre 9-18</span>
-          </div>
+            <div className="flex items-center gap-4 border-b border-zinc-200 py-4">
+                <Logo width={70} imageSrc="/ikoner/email.png" imageAlt=""/>
+                <span className="break-all text-base md:text-lg">kundservice@grøntak.no</span>
+            </div>
 
+            <div className="flex items-center gap-4 border-b border-zinc-200 py-4">
+                <Logo width={70} imageSrc="/ikoner/klokke.png" imageAlt=""/>
+                <span className="text-base md:text-lg">man-fre 9-18</span>
+            </div>
+          </div>
         </div>
       </div>
-
-    </section>)};
+    </section>
+  );
+}
