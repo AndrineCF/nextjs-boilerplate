@@ -9,7 +9,6 @@ interface Props {
 
 export default function Logo({ width = 140, imageSrc, imageAlt}: Props) {
   return (
-    <Link href="/">
       <Image
         src={imageSrc}
         alt={imageAlt}
@@ -17,6 +16,5 @@ export default function Logo({ width = 140, imageSrc, imageAlt}: Props) {
         height={0}
         style={{ height: "auto" }}
       />
-    </Link>
   );
 }

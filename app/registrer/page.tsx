@@ -43,7 +43,6 @@ export default function Registrer() {
     return (
       <main className="flex min-h-screen items-center justify-center">
         <div className="flex flex-col items-center gap-6 text-center max-w-sm">
-          <Image src="/logoer/full-logo.svg" alt="GrøntTak" width={160} height={50} />
           <div className="w-16 h-16 rounded-full bg-light-green flex items-center justify-center">
             <CheckCircle size={32} className="text-dark-green" />
           </div>
@@ -65,10 +64,6 @@ export default function Registrer() {
 
       {/* Venstre side */}
       <div className="flex flex-col w-full max-w-xl px-16 py-12 justify-between">
-
-        <Link href="/">
-          <Image src="/logoer/full-logo.svg" alt="GrøntTak" width={160} height={50} />
-        </Link>
 
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
@@ -256,6 +251,11 @@ export default function Registrer() {
             </button>
 
           </div>
+          <div className="flex items-center gap-4">
+            <div className="flex-1 h-px bg-zinc-200" />
+            <span className="text-sm text-zinc-400">eller</span>
+            <div className="flex-1 h-px bg-zinc-200" />
+          </div>
 
           <div className="flex flex-col items-center gap-2">
             <Link
@@ -275,14 +275,13 @@ export default function Registrer() {
 
       {/* Høyre side - bilde */}
       <div className="flex-1 relative hidden md:block">
-        <Image src="/img/login.jpg" alt="Grønt tak" fill className="object-cover" />
+        <Image src="/img/login.png" alt="Grønt tak" fill className="object-cover" />
         <div className="absolute inset-0 bg-dark-green/40 flex flex-col justify-end p-16">
           <blockquote className="text-white text-2xl font-semibold max-w-sm leading-relaxed">
             "Fremtidens byer er grønne — start med taket."
           </blockquote>
         </div>
       </div>
-
     </main>
   );
 }

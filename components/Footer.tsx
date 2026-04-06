@@ -4,7 +4,7 @@ import Logo from "@/components/Logo";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-light-green mt-16">
+    <footer className="w-full bg-light-green">
       <div className="px-6 py-10 md:px-10 md:py-12 flex flex-col gap-10">
 
         <div className="flex flex-col gap-8 md:flex-row md:justify-between md:items-start">
@@ -21,19 +21,19 @@ export default function Footer() {
               <h3 className="font-bold text-brand-green">Utforsk</h3>
               <Link href="/flora-kart" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">FloraKart</Link>
               <Link href="/om-prosjektet" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">Om oss</Link>
-              <Link href="/om-prosjektet" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">Om verktøyet</Link>
+              <Link href="/om-verktoy" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">Om verktøyet</Link>
               <Link href="/faq" className="text-sm text-zinc-700 hover:text-brand-green transition-colors">FAQ</Link>
             </div>
             <div className="flex flex-col gap-3">
               <h3 className="font-bold text-brand-green">Kontakt</h3>
-              <a href="mailto:kontakt@grøntak.no" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-brand-green transition-colors">
+              <span className="flex items-center gap-2 text-sm text-zinc-700">
                 <Logo width={40} imageSrc="/ikoner/email.png" imageAlt=""/>
                 kontakt@grøntak.no
-              </a>
-              <a href="tel:34243242" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-brand-green transition-colors">
+              </span>
+              <span className="flex items-center gap-2 text-sm text-zinc-700">
                 <Logo width={40} imageSrc="/ikoner/telefon.png" imageAlt=""/>
                 34243242
-              </a>
+              </span>
               <span className="flex items-center gap-2 text-sm text-zinc-700">
                 <Logo width={40} imageSrc="/ikoner/kart.png" imageAlt=""/>
                 Gløshaug 1, 7030 Trondheim

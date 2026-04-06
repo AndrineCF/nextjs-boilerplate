@@ -18,6 +18,7 @@ export default function KontaktOss() {
               width={400}
               height={400}
               className="rounded-lg flex-shrink-0 hidden md:block"
+              loading="eager"
             />
           </div>
 

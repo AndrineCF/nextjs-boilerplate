@@ -8,7 +8,18 @@ export async function loginUser(email: string, password: string) {
     password,
   });
 
-  if (error) throw new Error("Feil e-post eller passord. Prøv igjen.");
+  if (error) {
+    if (error.message.includes("Invalid login credentials")) {
+      throw new Error("Feil e-post eller passord. Prøv igjen.");
+    }
+    if (error.message.includes("Email not confirmed")) {
+      throw new Error("E-posten er ikke bekreftet. Sjekk innboksen din.");
+    }
+    if (error.message.includes("Too many requests")) {
+      throw new Error("For mange forsøk. Vent litt og prøv igjen.");
+    }
+    throw new Error("Noe gikk galt. Prøv igjen senere.");
+  }
 
   return data;
 }
