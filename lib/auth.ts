@@ -12,12 +12,15 @@ export async function loginUser(email: string, password: string) {
     if (error.message.includes("Invalid login credentials")) {
       throw new Error("Feil e-post eller passord. Prøv igjen.");
     }
+
     if (error.message.includes("Email not confirmed")) {
       throw new Error("E-posten er ikke bekreftet. Sjekk innboksen din.");
     }
+
     if (error.message.includes("Too many requests")) {
       throw new Error("For mange forsøk. Vent litt og prøv igjen.");
     }
+
     throw new Error("Noe gikk galt. Prøv igjen senere.");
   }
 
@@ -34,18 +37,37 @@ export async function registerUser(
 ) {
   const supabase = createClient();
 
-  const { data, error } = await supabase.auth.signUp({ email, password });
-  if (error) throw new Error("Kunne ikke registrere bruker. Prøv igjen.");
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    if (error.message.includes("User already registered")) {
+      throw new Error("Denne e-posten er allerede registrert.");
+    }
+
+    throw new Error("Kunne ikke registrere bruker. Prøv igjen.");
+  }
 
   if (data.user) {
-    await supabase
+    const { error: profileError } = await supabase
       .from("profiles")
-      .update({
-        navn: `${fornavn} ${etternavn}`,
-        telefon: telefon || null,
-        organisasjon: organisasjon || null,
-      })
-      .eq("id", data.user.id);
+      .upsert(
+        {
+          id: data.user.id,
+          navn: `${fornavn} ${etternavn}`.trim(),
+          telefon: telefon || null,
+          organisasjon: organisasjon || null,
+        },
+        { onConflict: "id" },
+      );
+
+    if (profileError) {
+      throw new Error(
+        "Kontoen ble opprettet, men profilinformasjonen kunne ikke lagres.",
+      );
+    }
   }
 
   return data;
@@ -69,5 +91,7 @@ export async function resetPassword(email: string) {
     redirectTo: `${window.location.origin}/oppdater-passord`,
   });
 
-  if (error) throw new Error("Kunne ikke sende e-post. Prøv igjen.");
+  if (error) {
+    throw new Error("Kunne ikke sende e-post. Prøv igjen.");
+  }
 }
