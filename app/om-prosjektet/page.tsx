@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Hero from "@/components/Hero";
+import Logo from "@/components/Logo";
 
 export default function OmProsjektet() {
   return (
@@ -12,103 +13,106 @@ export default function OmProsjektet() {
         imageAlt="Illustrasjon av folk med planter"
       />
 
-      {/* Hva handler prosjektet om */}
-      <section className="flex items-center gap-40 px-16 py-20 2xl:px-44">
-        
-        {/* Bilde venstre */}
-        <div className="flex-shrink-0">
+ {/* Hva handler prosjektet om */}
+      <section className="flex flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:gap-16 md:px-16 md:py-20 2xl:px-32">
+        <div className="flex-shrink-0 flex justify-center">
           <Image
             src="/img/gronnetak.png"
             alt="Grønne tak i by"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover"
+            width={450}
+            height={400}
+            className="rounded-lg object-cover w-full max-w-sm md:max-w-md"
           />
         </div>
-
-        {/* Tekst høyre */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-3xl font-bold">Hva handler prosjekt om?</h2>
-          <div className="w-full h-1 bg-dark-green" />
-          <p className="text-lg leading-relaxed text-zinc-700">
-            Implementering av grønne tak har i de siste år økt i popularitet, 
-            spesielt i urbane strøk som en pustende, estetisk og grønn del av bylivet. 
-            I takt med fortetting og færre grønne flater er grønne tak et viktig 
-            miljøtiltak i byer fordi de styrker lokal flora og biologisk mangfold 
-            ved å skape nye leveområder for planter og insekter. I tillegg til påvist 
-            positiv effekt på menneskers mentale helse ved å være en aktiv del av 
-            hverdagen bidrar vegetasjonen til bedre bymiljø ved å fange svevestøv, 
-            binde CO₂ og håndtere overvann.
-          </p>
+          <h2 className="text-2xl font-bold md:text-3xl">Hva handler prosjektet om?</h2>
+          <div className="w-16 h-1 bg-dark-green" />
+          <div className="flex flex-col gap-4">
+            <p className="text-base leading-relaxed text-zinc-700 md:text-lg">
+              Implementering av grønne tak har i de siste år økt i popularitet, spesielt i urbane strøk som en pustende, estetisk og grønn del av bylivet.
+            </p>
+            <p className="text-base leading-relaxed text-zinc-700 md:text-lg">
+              I takt med fortetting og færre grønne flater er grønne tak et viktig miljøtiltak i byer fordi de styrker lokal flora og biologisk mangfold ved å skape nye leveområder for planter og insekter.
+            </p>
+            <p className="text-base leading-relaxed text-zinc-700 md:text-lg">
+              I tillegg til påvist positiv effekt på menneskers mentale helse bidrar vegetasjonen til bedre bymiljø ved å fange svevestøv, binde CO₂ og håndtere overvann.
+            </p>
+          </div>
         </div>
-
       </section>
+
+  
 
        {/* Vårt datagrunnlag */}
-      <section className="flex items-center gap-40 px-16 py-20 2xl:px-44">
+      <section className="flex flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:gap-16 md:px-16 md:py-20 2xl:px-32">
         <div className="flex flex-col gap-4">
-          <h2 className="text-3xl font-bold text-center">Vårt datagrunnlag</h2>
-          <div className="w-full h-1 bg-dark-green" />
+          <h2 className="text-2xl font-bold md:text-3xl">vårt datagrunnlag</h2>
+          <div className="w-16 h-1 bg-dark-green" />
           <div className="flex flex-col gap-4">
-            <p className="text-lg leading-relaxed text-zinc-700">
-              Datagrunnlaget for verktøyet er basert på artsobservasjoner fra Artsdatabanken, hentet gjennom karttjenesten Artskart. Datasettene ble filtrert til å omfatte karplanter registrert i Trondheim kommune fra 1975 og frem til i dag, noe som ga et utgangspunkt på rundt 70 000 observasjoner.
-            </p>
-            <p className="text-lg leading-relaxed text-zinc-700">
+            <p className="text-base leading-relaxed text-zinc-700 md:text-lg">
+Datagrunnlaget for verktøyet er basert på artsobservasjoner fra Artsdatabanken, hentet gjennom karttjenesten Artskart. Datasettene ble filtrert til å omfatte karplanter registrert i Trondheim kommune fra 1975 og frem til i dag, noe som ga et utgangspunkt på rundt 70 000 observasjoner.           </p>
+            <p className="text-base leading-relaxed text-zinc-700 md:text-lg">
               For å gjøre datasettet relevant for bruk på grønne tak ble det gjennomført en stegvis filtreringsprosess. Fremmede arter og rødlistede arter (RE, CR, EN og VU) ble fjernet, sammen med arter som ikke egner seg for takmiljøer, som trær, skogbunnsarter og planter med høyt fuktighetsbehov. Videre ble artene vurdert etter stedegenhet og tilpasning til tørre, næringsfattige vekstforhold
             </p>
-            <p className="text-lg leading-relaxed text-zinc-700">
-              Til slutt ble listen avgrenset til arter som også er tilgjengelige på markedet. Resultatet er et datasett på 58 stedegne 
-plantearter som kan fungere på grønne tak i Trondheim. For hver art er det lagt til informasjon om blant annet solforhold, jorddybde, vindeksponering, pollinatorverdi og etableringsmetode, slik at de kan filtreres og brukes i planlegging av habitattak.
+            <p className="text-base leading-relaxed text-zinc-700 md:text-lg">
+              Til slutt ble listen avgrenset til arter som også er tilgjengelige på markedet. Resultatet er et datasett på 58 stedegne plantearter som kan fungere på grønne tak i Trondheim. For hver art er det lagt til informasjon om blant annet solforhold, jorddybde, vindeksponering, pollinatorverdi og etableringsmetode, slik at de kan filtreres og brukes i planlegging av habitattak.
             </p>
           </div>
         </div>
       </section>
       
-      <section className="flex flex-col w-full items-center px-6 py-16 gap-12 bg-light-yellow">
-        <h2 className="text-3xl font-bold">Våre verdier</h2>
-        <div className="flex flex-row justify-center gap-24">
+      {/* Våre verdier */}
+      <section className="w-full bg-light-yellow px-4 py-12 md:px-6 md:py-16">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 md:gap-12">
+          <h2 className="text-center text-2xl font-bold md:text-3xl">
+            Våre verdier
+          </h2>
 
-          <div className="flex flex-col items-center gap-4">
-            <Image src="/ikoner/stedegenNatur.svg" alt="" width={300} height={300}  />
-            <span className="text-lg text-center">Stedegen natur</span>
-          </div>
-                
-          <div className="flex flex-col items-center gap-4">
-            <Image src="/ikoner/stedstilpassede.svg" alt="" width={300} height={300} />
-            <span className="text-lg text-center">Biologisk mangfold</span>
-          </div>
-      
-          <div className="flex flex-col items-center gap-4">
-            <Image src="/ikoner/bymiljo.svg" alt="" width={300} height={300}  />
-            <span className="text-lg text-center">Bedre bymiljø</span>
-          </div>
-      
-          <div className="flex flex-col items-center gap-4">
-            <Image src="/ikoner/stedstilpassede.svg" alt="" width={300} height={300}  />
-            <span className="text-lg text-center">Stedstilpassede løsninger</span>
-          </div>
+          <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+            <div className="flex flex-col items-center gap-4">
+              <Logo width={200} imageSrc="/ikoner/stedegenNatur.svg" imageAlt=""/>
+              <span className="text-center text-base md:text-lg">
+                Stedegen natur
+              </span>
+            </div>
 
+            <div className="flex flex-col items-center gap-4">
+              <Logo width={200} imageSrc="/ikoner/stedstilpassede.svg" imageAlt=""/>
+              <span className="text-center text-base md:text-lg">
+                Biologisk mangfold
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center gap-4">
+              <Logo width={200} imageSrc="/ikoner/bymiljo.svg" imageAlt=""/>
+              <span className="text-center text-base md:text-lg">
+                Bedre bymiljø
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center gap-4">
+              <Logo width={200} imageSrc="/ikoner/stedstilpassede.svg" imageAlt=""/>
+              <span className="text-center text-base md:text-lg">
+                Stedstilpassede løsninger
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* FN bærekraftsmål */}
-      <section className="flex items-center justify-center  gap-30 px-16 py-20 2xl:px-40">
-            
-        {/* Tekst venstre */}
-        <div className="flex-shrink-0 w-48">
-          <h2 className="text-2xl font-bold text-center">FN bærekraftsmål for prosjekt</h2>
+      <section className="flex flex-col gap-8 items-center px-6 py-12 md:flex-row md:justify-center md:gap-16 md:px-16 md:py-20 2xl:px-32">
+        <div className="flex-shrink-0 w-full max-w-xs text-center md:text-left md:w-48">
+          <h2 className="text-2xl font-bold">FN bærekraftsmål for prosjekt</h2>
         </div>
-
-        {/* Grid med ikoner høyre */}
-        <div className="grid grid-cols-3 gap-20">
-          <Image src="/img/fn/fn11.png" alt="Bærekraftige byer og lokalsamfunn" width={180} height={180} className="rounded-md" />
-          <Image src="/img/fn/fn13.png" alt="Stoppe klimaendringene" width={180} height={180} className="rounded-md" />
-          <Image src="/img/fn/fn7.png" alt="Ren energi til alle" width={180} height={180} className="rounded-md" />
-          <Image src="/img/fn/fn15.png" alt="Livet på land" width={180} height={180} className="rounded-md" />
-          <Image src="/img/fn/fn3.png" alt="God helse og livskvalitet" width={180} height={180} className="rounded-md" />
-          <Image src="/img/fn/fn6.png" alt="Rent vann og gode sanitærforhold" width={180} height={180} className="rounded-md" />
+        <div className="grid grid-cols-3 gap-3 md:gap-4">
+          <Logo width={120} imageSrc="/img/fn/fn3.png" imageAlt="FN bærekraftigmål 3: God helse og livskvalitet"/>
+          <Logo width={120} imageSrc="/img/fn/fn6.png" imageAlt="FN bærekraftigmål 6: Rent vann og gode sanitærforhold"/>
+          <Logo width={120} imageSrc="/img/fn/fn7.png" imageAlt="FN bærekraftigmål 7: Ren energi til alle"/>
+          <Logo width={120} imageSrc="/img/fn/fn11.png" imageAlt="FN bærekraftigmål 11: Bærekraftige byer og lokalsamfunn"/>
+          <Logo width={120} imageSrc="/img/fn/fn13.png" imageAlt="FN bærekraftigmål 13: Stoppe klimaendringene"/>
+          <Logo width={120} imageSrc="/img/fn/fn15.png" imageAlt="FN bærekraftigmål 15: Livet på land"/>
         </div>
-
       </section>
 
     </main>
