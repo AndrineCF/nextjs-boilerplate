@@ -25,12 +25,10 @@ export class SentenceTransformerEmbeddings extends Embeddings {
     this.config = config;
 
     if (config.mode === "api") {
-      console.log("🌐 Using HuggingFace Inference API...");
       this.apiModel = new HuggingFaceInferenceEmbeddings({
         apiKey: config.apiKey ?? process.env.HUGGINGFACEHUB_API_TOKEN,
         model: config.modelName,
       });
-      console.log("✅ API embeddings ready");
     }
   }
 
@@ -41,13 +39,11 @@ export class SentenceTransformerEmbeddings extends Embeddings {
   async initialize(): Promise<void> {
     if (this.config.mode !== "local") return;
 
-    console.log("💻 Loading local embeddings model...");
     this.localModel = await pipeline(
       "feature-extraction",
       this.config.modelName,
       { cache_dir: this.config.storedPathModel }
     );
-    console.log("✅ Local embeddings model loaded");
   }
 
   getModel() {

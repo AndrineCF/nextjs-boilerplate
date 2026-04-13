@@ -28,11 +28,9 @@ export async function POST(request: Request) {
     );
 
     if (supabaseError) {
-      console.error("Supabase feil:", supabaseError);
       return Response.json({ error: supabaseError.message }, { status: 500 });
     }
 
-    console.log("Antall dokumenter hentet:", documents?.length ?? 0);
 
     // 3. Bygg kontekst fra dokumentene
     const context =
@@ -64,7 +62,6 @@ Basér svaret ditt KUN på plantene listet ovenfor. Ikke nevn andre planter.`
 
     return Response.json({ response });
   } catch (error) {
-    console.error("Feil:", error);
     return Response.json({ error: String(error) }, { status: 500 });
   }
 }
