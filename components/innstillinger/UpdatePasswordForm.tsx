@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
-import { updatePasswordSchema, UpdatePasswordFormData } from "@/lib/validation";
+import { updatePasswordSchema, type UpdatePasswordFormData } from "@/lib/validation";
 import { updatePassword } from "@/lib/settings";
 
 export default function UpdatePasswordForm() {
@@ -24,20 +24,20 @@ export default function UpdatePasswordForm() {
       setSuccess(true);
       reset();
     } catch (e) {
-      setError(String(e));
+      setError(e instanceof Error ? e.message : "Noe gikk galt. Prøv igjen.");
     }
   }
 
   return (
     <div className="flex flex-col gap-4">
       {success && (
-        <div className="flex items-center gap-2 text-green-700 bg-green-50 border border-green-200 px-4 py-3 rounded-xl text-sm">
+        <div className="flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
           <CheckCircle size={16} />
           Passord oppdatert!
         </div>
       )}
       {error && (
-        <div className="flex items-center gap-2 text-red-700 bg-red-50 border border-red-200 px-4 py-3 rounded-xl text-sm">
+        <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           <AlertCircle size={16} />
           {error}
         </div>
@@ -49,7 +49,7 @@ export default function UpdatePasswordForm() {
             {...register("password")}
             type={showPassword ? "text" : "password"}
             placeholder="••••••••"
-            className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full pr-12 ${
+            className={`w-full rounded-xl border px-4 py-3 pr-12 transition-all focus:outline-none focus:ring-2 ${
               errors.password
                 ? "border-red-400 focus:ring-red-100"
                 : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
@@ -57,14 +57,15 @@ export default function UpdatePasswordForm() {
           />
           <button
             type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 transition-colors hover:text-zinc-600"
+            aria-label={showPassword ? "Skjul passord" : "Vis passord"}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
         {errors.password && (
-          <p className="text-sm text-red-500 flex items-center gap-1">
+          <p className="flex items-center gap-1 text-sm text-red-500">
             <AlertCircle size={14} />
             {errors.password.message}
           </p>
@@ -76,14 +77,14 @@ export default function UpdatePasswordForm() {
           {...register("confirmPassword")}
           type={showPassword ? "text" : "password"}
           placeholder="••••••••"
-          className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full ${
+          className={`w-full rounded-xl border px-4 py-3 transition-all focus:outline-none focus:ring-2 ${
             errors.confirmPassword
               ? "border-red-400 focus:ring-red-100"
               : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
           }`}
         />
         {errors.confirmPassword && (
-          <p className="text-sm text-red-500 flex items-center gap-1">
+          <p className="flex items-center gap-1 text-sm text-red-500">
             <AlertCircle size={14} />
             {errors.confirmPassword.message}
           </p>
@@ -92,7 +93,7 @@ export default function UpdatePasswordForm() {
       <button
         onClick={handleSubmit(onSubmit)}
         disabled={isSubmitting}
-        className="bg-dark-green text-white font-semibold py-3 rounded-xl hover:opacity-90 transition-all w-fit px-8 disabled:opacity-60"
+        className="w-fit rounded-xl bg-dark-green px-8 py-3 font-semibold text-white transition-all hover:opacity-90 disabled:opacity-60"
       >
         {isSubmitting ? "Lagrer..." : "Oppdater passord"}
       </button>

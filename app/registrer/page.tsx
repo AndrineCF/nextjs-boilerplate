@@ -1,14 +1,74 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema, RegisterFormData } from "@/lib/validation";
+import { registerSchema, type RegisterFormData } from "@/lib/validation";
 import { registerUser } from "@/lib/auth";
+import Img from "@/components/Img";
 
+// ─── Delkomponenter ─────────────────────────────────────────────
+function FormField({
+  label,
+  error,
+  optional,
+  children,
+}: {
+  label: string;
+  error?: string;
+  optional?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-1 flex-col gap-1.5">
+      <label className="text-sm font-medium text-zinc-700">
+        {label}{" "}
+        {optional && <span className="text-zinc-400">(valgfri)</span>}
+      </label>
+      {children}
+      {error && (
+        <p className="flex items-center gap-1 text-sm text-red-500">
+          <AlertCircle size={14} />
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─── Input-klasser ───────────────────────────────────────────────
+function inputClass(hasError: boolean) {
+  return `w-full rounded-xl border px-4 py-3 transition-all focus:outline-none focus:ring-2 ${
+    hasError
+      ? "border-red-400 focus:ring-red-100"
+      : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
+  }`;
+}
+
+// ─── Suksessvisning ─────────────────────────────────────────────
+function SuccessView() {
+  return (
+    <main className="flex min-h-screen items-center justify-center">
+      <div className="flex max-w-sm flex-col items-center gap-6 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-light-green">
+          <CheckCircle size={32} className="text-dark-green" />
+        </div>
+        <h1 className="text-2xl font-bold">Konto opprettet!</h1>
+        <p className="text-zinc-500">Du kan nå logge inn med din nye konto.</p>
+        <Link
+          href="/login"
+          className="rounded-xl bg-dark-green px-8 py-3 font-semibold text-white transition-all hover:opacity-90"
+        >
+          Gå til innlogging
+        </Link>
+      </div>
+    </main>
+  );
+}
+
+// ─── Registrer ──────────────────────────────────────────────────
 export default function Registrer() {
   const [showPassword, setShowPassword] = useState(false);
   const [generalError, setGeneralError] = useState("");
@@ -35,36 +95,17 @@ export default function Registrer() {
       );
       setSuccess(true);
     } catch (error) {
-      setGeneralError(String(error));
+      setGeneralError(error instanceof Error ? error.message : "Noe gikk galt. Prøv igjen.");
     }
   }
 
-  if (success) {
-    return (
-      <main className="flex min-h-screen items-center justify-center">
-        <div className="flex flex-col items-center gap-6 text-center max-w-sm">
-          <div className="w-16 h-16 rounded-full bg-light-green flex items-center justify-center">
-            <CheckCircle size={32} className="text-dark-green" />
-          </div>
-          <h1 className="text-2xl font-bold">Konto opprettet!</h1>
-          <p className="text-zinc-500">Du kan nå logge inn med din nye konto.</p>
-          <Link
-            href="/login"
-            className="bg-dark-green text-white font-semibold py-3 px-8 rounded-xl hover:opacity-90 transition-all"
-          >
-            Gå til innlogging
-          </Link>
-        </div>
-      </main>
-    );
-  }
+  if (success) return <SuccessView />;
 
   return (
     <main className="flex min-h-screen">
 
       {/* Venstre side */}
-      <div className="flex flex-col w-full max-w-xl px-16 py-12 justify-between">
-
+      <div className="flex w-full max-w-xl flex-col justify-between px-16 py-12">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
             <h1 className="text-4xl font-bold text-zinc-900">Opprett konto</h1>
@@ -72,212 +113,134 @@ export default function Registrer() {
           </div>
 
           {generalError && (
-            <div className="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+            <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               <AlertCircle size={18} className="flex-shrink-0" />
               {generalError}
             </div>
           )}
 
           <div className="flex flex-col gap-5">
-
             {/* Fornavn og etternavn */}
             <div className="flex gap-4">
-              <div className="flex flex-col gap-1.5 flex-1">
-                <label className="text-sm font-medium text-zinc-700">Fornavn</label>
+              <FormField label="Fornavn" error={errors.fornavn?.message}>
                 <input
                   {...register("fornavn")}
                   type="text"
                   placeholder="Ola"
-                  className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full ${
-                    errors.fornavn
-                      ? "border-red-400 focus:ring-red-100"
-                      : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
-                  }`}
+                  className={inputClass(!!errors.fornavn)}
                 />
-                {errors.fornavn && (
-                  <p className="text-sm text-red-500 flex items-center gap-1">
-                    <AlertCircle size={14} />
-                    {errors.fornavn.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-1.5 flex-1">
-                <label className="text-sm font-medium text-zinc-700">Etternavn</label>
+              </FormField>
+              <FormField label="Etternavn" error={errors.etternavn?.message}>
                 <input
                   {...register("etternavn")}
                   type="text"
                   placeholder="Nordmann"
-                  className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full ${
-                    errors.etternavn
-                      ? "border-red-400 focus:ring-red-100"
-                      : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
-                  }`}
+                  className={inputClass(!!errors.etternavn)}
                 />
-                {errors.etternavn && (
-                  <p className="text-sm text-red-500 flex items-center gap-1">
-                    <AlertCircle size={14} />
-                    {errors.etternavn.message}
-                  </p>
-                )}
-              </div>
+              </FormField>
             </div>
 
             {/* Telefon og organisasjon */}
             <div className="flex gap-4">
-              <div className="flex flex-col gap-1.5 flex-1">
-                <label className="text-sm font-medium text-zinc-700">
-                  Telefon <span className="text-zinc-400">(valgfri)</span>
-                </label>
+              <FormField label="Telefon" error={errors.telefon?.message} optional>
                 <input
                   {...register("telefon")}
                   type="tel"
                   placeholder="+47 000 00 000"
-                  className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full ${
-                    errors.telefon
-                      ? "border-red-400 focus:ring-red-100"
-                      : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
-                  }`}
+                  className={inputClass(!!errors.telefon)}
                 />
-                {errors.telefon && (
-                  <p className="text-sm text-red-500 flex items-center gap-1">
-                    <AlertCircle size={14} />
-                    {errors.telefon.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-1.5 flex-1">
-                <label className="text-sm font-medium text-zinc-700">
-                  Organisasjon <span className="text-zinc-400">(valgfri)</span>
-                </label>
+              </FormField>
+              <FormField label="Organisasjon" error={errors.organisasjon?.message} optional>
                 <input
                   {...register("organisasjon")}
                   type="text"
                   placeholder="Firma AS"
-                  className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full ${
-                    errors.organisasjon
-                      ? "border-red-400 focus:ring-red-100"
-                      : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
-                  }`}
+                  className={inputClass(!!errors.organisasjon)}
                 />
-                {errors.organisasjon && (
-                  <p className="text-sm text-red-500 flex items-center gap-1">
-                    <AlertCircle size={14} />
-                    {errors.organisasjon.message}
-                  </p>
-                )}
-              </div>
+              </FormField>
             </div>
 
             {/* E-post */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-zinc-700">E-post</label>
+            <FormField label="E-post" error={errors.email?.message}>
               <input
                 {...register("email")}
                 type="email"
                 placeholder="navn@epost.no"
-                className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full ${
-                  errors.email
-                    ? "border-red-400 focus:ring-red-100"
-                    : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
-                }`}
+                className={inputClass(!!errors.email)}
               />
-              {errors.email && (
-                <p className="text-sm text-red-500 flex items-center gap-1">
-                  <AlertCircle size={14} />
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
+            </FormField>
 
             {/* Passord */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-zinc-700">Passord</label>
+            <FormField label="Passord" error={errors.password?.message}>
               <div className="relative">
                 <input
                   {...register("password")}
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full pr-12 ${
-                    errors.password
-                      ? "border-red-400 focus:ring-red-100"
-                      : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
-                  }`}
+                  className={`${inputClass(!!errors.password)} pr-12`}
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 transition-colors hover:text-zinc-600"
+                  aria-label={showPassword ? "Skjul passord" : "Vis passord"}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-sm text-red-500 flex items-center gap-1">
-                  <AlertCircle size={14} />
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
+            </FormField>
 
             {/* Bekreft passord */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-zinc-700">Bekreft passord</label>
+            <FormField label="Bekreft passord" error={errors.confirmPassword?.message}>
               <input
                 {...register("confirmPassword")}
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                className={`border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all w-full ${
-                  errors.confirmPassword
-                    ? "border-red-400 focus:ring-red-100"
-                    : "border-zinc-200 focus:border-dark-green focus:ring-dark-green/10"
-                }`}
+                className={inputClass(!!errors.confirmPassword)}
               />
-              {errors.confirmPassword && (
-                <p className="text-sm text-red-500 flex items-center gap-1">
-                  <AlertCircle size={14} />
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
+            </FormField>
 
             <button
               onClick={handleSubmit(onSubmit)}
               disabled={isSubmitting}
-              className="bg-dark-green text-white font-semibold py-3.5 rounded-xl hover:opacity-90 active:scale-[0.98] transition-all w-full disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full rounded-xl bg-dark-green py-3.5 font-semibold text-white transition-all hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? "Registrerer..." : "Registrer deg"}
             </button>
-
           </div>
+
           <div className="flex items-center gap-4">
-            <div className="flex-1 h-px bg-zinc-200" />
+            <div className="h-px flex-1 bg-zinc-200" />
             <span className="text-sm text-zinc-400">eller</span>
-            <div className="flex-1 h-px bg-zinc-200" />
+            <div className="h-px flex-1 bg-zinc-200" />
           </div>
 
           <div className="flex flex-col items-center gap-2">
             <Link
               href="/login"
-              className="w-full border-2 border-dark-green text-dark-green font-semibold py-3.5 rounded-xl hover:bg-light-green transition-all text-center"
+              className="w-full rounded-xl border-2 border-dark-green py-3.5 text-center font-semibold text-dark-green transition-all hover:bg-light-green"
             >
               Logg inn
             </Link>
             <p className="text-sm text-zinc-500">Har du allerede en konto?</p>
           </div>
-
         </div>
 
         <p className="text-xs text-zinc-400">© 2025 GrøntTak. Alle rettigheter reservert.</p>
-
       </div>
 
       {/* Høyre side - bilde */}
-      <div className="flex-1 relative hidden md:block">
-        <Image src="/img/login.png" alt="Grønt tak" fill className="object-cover" />
-        <div className="absolute inset-0 bg-dark-green/40 flex flex-col justify-end p-16">
-          <blockquote className="text-white text-2xl font-semibold max-w-sm leading-relaxed">
+      <div className="relative hidden flex-1 md:block">
+        <Img
+          imageSrc="/img/login.png"
+          imageAlt="Grønt tak"
+          width={1200}
+          height={800}
+          className="h-full w-full object-cover"
+          priority
+        />
+        <div className="absolute inset-0 flex flex-col justify-end bg-dark-green/40 p-16">
+          <blockquote className="max-w-sm text-2xl font-semibold leading-relaxed text-white">
             "Fremtidens byer er grønne — start med taket."
           </blockquote>
         </div>

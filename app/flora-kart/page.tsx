@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
+import { type Message } from "@/lib/llm";
 
 export default function FloraKart() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -16,7 +12,9 @@ export default function FloraKart() {
     if (!input.trim()) return;
 
     const userMessage: Message = { role: "user", content: input };
-    setMessages(prev => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+
+    setMessages(updatedMessages);
     setInput("");
     setLoading(true);
 
@@ -24,21 +22,30 @@ export default function FloraKart() {
       const response = await fetch("/api/flora-kart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({
+          message: input,
+          history: messages, // sender samtalehistorikk
+        }),
       });
 
       const data = await response.json();
 
       if (data.error) {
-        const errorMessage: Message = { role: "assistant", content: `Feil: ${data.error}` };
-        setMessages(prev => [...prev, errorMessage]);
+        setMessages([
+          ...updatedMessages,
+          { role: "assistant", content: `Feil: ${data.error}` },
+        ]);
       } else {
-        const assistantMessage: Message = { role: "assistant", content: data.response };
-        setMessages(prev => [...prev, assistantMessage]);
+        setMessages([
+          ...updatedMessages,
+          { role: "assistant", content: data.response },
+        ]);
       }
-    } catch (error) {
-      const errorMessage: Message = { role: "assistant", content: `Noe gikk galt. Prøv igjen.` };
-      setMessages(prev => [...prev, errorMessage]);
+    } catch {
+      setMessages([
+        ...updatedMessages,
+        { role: "assistant", content: "Noe gikk galt. Prøv igjen." },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -50,7 +57,9 @@ export default function FloraKart() {
       {/* Topp */}
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold">FloraKart</h1>
-        <p className="text-zinc-600">Spør om hvilke planter som passer for ditt grønne tak i Trondheim.</p>
+        <p className="text-zinc-600">
+          Spør om hvilke planter som passer for ditt grønne tak i Trondheim.
+        </p>
       </div>
 
       {/* Meldinger */}
@@ -58,15 +67,31 @@ export default function FloraKart() {
         {messages.length === 0 && (
           <div className="flex flex-col gap-3 text-zinc-400 text-sm">
             <p>Eksempelspørsmål:</p>
-            <button onClick={() => setInput("Hvilke planter passer på et solrikt tak?")} className="text-left hover:text-brand-green transition-colors">→ Hvilke planter passer på et solrikt tak?</button>
-            <button onClick={() => setInput("Hvilke planter trenger lite jorddybde?")} className="text-left hover:text-brand-green transition-colors">→ Hvilke planter trenger lite jorddybde?</button>
-            <button onClick={() => setInput("Hvilke planter er bra for pollinatorer?")} className="text-left hover:text-brand-green transition-colors">→ Hvilke planter er bra for pollinatorer?</button>
+            <button
+              onClick={() => setInput("Hvilke planter passer på et solrikt tak?")}
+              className="text-left hover:text-brand-green transition-colors"
+            >
+              → Hvilke planter passer på et solrikt tak?
+            </button>
+            <button
+              onClick={() => setInput("Hvilke planter trenger lite jorddybde?")}
+              className="text-left hover:text-brand-green transition-colors"
+            >
+              → Hvilke planter trenger lite jorddybde?
+            </button>
+            <button
+              onClick={() => setInput("Hvilke planter er bra for pollinatorer?")}
+              className="text-left hover:text-brand-green transition-colors"
+            >
+              → Hvilke planter er bra for pollinatorer?
+            </button>
           </div>
         )}
+
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`px-4 py-3 rounded-xl max-w-2xl ${
+            className={`px-4 py-3 rounded-xl max-w-2xl whitespace-pre-wrap ${
               msg.role === "user"
                 ? "bg-dark-green text-white self-end"
                 : "bg-light-green self-start"
@@ -75,6 +100,7 @@ export default function FloraKart() {
             {msg.content}
           </div>
         ))}
+
         {loading && (
           <div className="bg-light-green px-4 py-3 rounded-xl self-start text-zinc-500">
             Skriver...
@@ -87,14 +113,16 @@ export default function FloraKart() {
         <input
           type="text"
           value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && sendMessage()}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && !loading && sendMessage()}
           placeholder="Spør om planter for ditt tak..."
           className="flex-1 border border-zinc-300 rounded-xl px-4 py-3 focus:outline-none focus:border-dark-green"
+          disabled={loading}
         />
         <button
           onClick={sendMessage}
-          className="bg-dark-green text-white px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
+          disabled={loading}
+          className="bg-dark-green text-white px-6 py-3 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           Send
         </button>

@@ -1,10 +1,10 @@
-export interface FAQItem {
+export interface FAQItemData {
   spørsmål: string;
   svar: string;
   kategori: string;
 }
 
-export const faqData: FAQItem[] = [
+export const faqData: FAQItemData[] = [
   {
     kategori: "Om GrøntTak",
     spørsmål: "Hva er GrøntTak?",
@@ -62,4 +62,4 @@ export const faqData: FAQItem[] = [
   },
 ];
 
-export const kategorier = [...new Set(faqData.map(item => item.kategori))];
+export const kategorier = [...new Set(faqData.map((item) => item.kategori))];

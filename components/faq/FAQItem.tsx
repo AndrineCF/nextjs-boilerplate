@@ -2,27 +2,28 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { FAQItem as FAQItemType } from "@/lib/faq-data";
+import type { FAQItemData } from "@/lib/data/faqData";
 
-export default function FAQItem({ item }: { item: FAQItemType }) {
+export default function FAQItem({ item }: { item: FAQItemData }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border border-zinc-200 rounded-xl overflow-hidden">
+    <div className="overflow-hidden rounded-xl border border-zinc-200">
       <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-zinc-50 transition-colors"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-zinc-50"
+        aria-expanded={open}
       >
         <span className="font-medium text-zinc-900">{item.spørsmål}</span>
         {open ? (
-          <ChevronUp size={20} className="text-brand-green flex-shrink-0" />
+          <ChevronUp size={20} className="flex-shrink-0 text-brand-green" />
         ) : (
-          <ChevronDown size={20} className="text-zinc-400 flex-shrink-0" />
+          <ChevronDown size={20} className="flex-shrink-0 text-zinc-400" />
         )}
       </button>
       {open && (
-        <div className="px-6 py-4 bg-zinc-50 border-t border-zinc-200">
-          <p className="text-zinc-600 leading-relaxed">{item.svar}</p>
+        <div className="border-t border-zinc-200 bg-zinc-50 px-6 py-4">
+          <p className="leading-relaxed text-zinc-600">{item.svar}</p>
         </div>
       )}
     </div>

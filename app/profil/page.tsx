@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getProfile, Profile } from "@/lib/profile"
+import { type Profile, getProfile } from "@/lib/profile";
 import { logoutUser } from "@/lib/auth";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import ProfileInfo from "@/components/profile/ProfileInfo";
@@ -25,7 +25,7 @@ export default function Profil() {
       setProfile(data);
       setLoading(false);
     }
-    fetchProfile();
+    void fetchProfile();
   }, [router]);
 
   async function handleLogout() {
@@ -37,7 +37,7 @@ export default function Profil() {
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <div className="w-8 h-8 border-2 border-dark-green border-t-transparent rounded-full animate-spin" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-dark-green border-t-transparent" />
       </main>
     );
   }
@@ -46,13 +46,17 @@ export default function Profil() {
 
   return (
     <main className="min-h-screen bg-zinc-50 pb-16">
-      <div className="w-full h-48 relative">
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: "radial-gradient(circle at 20% 50%, #fff 1px, transparent 1px)", backgroundSize: "40px 40px" }}
+      <div className="relative h-48 w-full">
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: "radial-gradient(circle at 20% 50%, #fff 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
         />
       </div>
 
-      <div className="max-w-4xl mx-auto px-8 2xl:px-0">
+      <div className="mx-auto max-w-4xl px-8 2xl:px-0">
         <ProfileHeader profile={profile} onLogout={handleLogout} loggingOut={loggingOut} />
         <div className="grid grid-cols-3 gap-6">
           <div className="col-span-2 flex flex-col gap-6">

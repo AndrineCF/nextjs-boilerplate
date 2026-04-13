@@ -19,12 +19,16 @@ export default function SessionExpiredToast() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-white border border-zinc-200 shadow-lg px-4 py-3 rounded-xl text-sm max-w-sm">
-      <AlertCircle size={18} className="text-amber-500 flex-shrink-0" />
+    <div className="fixed bottom-6 right-6 z-50 flex max-w-sm items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm shadow-lg">
+      <AlertCircle size={18} className="flex-shrink-0 text-amber-500" />
       <span className="text-zinc-700">Sesjonen din har utløpt. Logg inn igjen.</span>
-      <button onClick={() => setShow(false)} className="text-zinc-400 hover:text-zinc-600 ml-auto">
+      <button
+        onClick={() => setShow(false)}
+        className="ml-auto text-zinc-400 hover:text-zinc-600"
+        aria-label="Lukk varsel"
+      >
         <X size={16} />
       </button>
     </div>
   );
-} 
+}

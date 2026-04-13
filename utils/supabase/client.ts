@@ -1,17 +1,22 @@
 import { createBrowserClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-let client: SupabaseClient | undefined;
+// ─── Validering ─────────────────────────────────────────────────
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
-export function createClient() {
-  if (client) {
-    return client;
-  }
-
-  client = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!,
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error(
+    "Mangler Supabase-miljøvariabler. Sjekk NEXT_PUBLIC_SUPABASE_URL og NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY i .env.local"
   );
+}
 
-  return client;
+// ─── Singleton ──────────────────────────────────────────────────
+let supabaseClient: SupabaseClient | undefined;
+
+export function createClient(): SupabaseClient {
+  if (supabaseClient) return supabaseClient;
+
+  supabaseClient = createBrowserClient(supabaseUrl, supabaseKey);
+  return supabaseClient;
 }

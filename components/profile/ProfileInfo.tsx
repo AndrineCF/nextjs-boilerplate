@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { User, Mail, Calendar, Pencil, Check, X } from "lucide-react";
-import { Profile, formatMemberSince } from "@/lib/profile";
+import { type Profile, formatMemberSince } from "@/lib/profile";
 import { updateNavn } from "@/lib/settings";
 
 interface Props {
@@ -21,23 +21,29 @@ export default function ProfileInfo({ profile }: Props) {
     try {
       await updateNavn(navn);
       setEditingNavn(false);
-    } catch (e) {
+    } catch {
       setError("Kunne ikke lagre navn. Prøv igjen.");
     } finally {
       setLoading(false);
     }
   }
 
+  function handleCancel() {
+    setEditingNavn(false);
+    setNavn(profile.navn ?? "");
+    setError("");
+  }
+
   return (
-    <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
-      <div className="px-6 py-4 border-b border-zinc-100">
+    <div className="overflow-hidden rounded-2xl border border-zinc-100 bg-white">
+      <div className="border-b border-zinc-100 px-6 py-4">
         <h2 className="font-semibold text-zinc-900">Kontoinformasjon</h2>
       </div>
       <div className="divide-y divide-zinc-50">
 
         {/* Navn */}
-        <div className="px-6 py-4 flex items-center gap-4">
-          <div className="w-9 h-9 rounded-xl bg-light-green flex items-center justify-center flex-shrink-0">
+        <div className="flex items-center gap-4 px-6 py-4">
+          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-light-green">
             <User size={16} className="text-dark-green" />
           </div>
           <div className="flex-1">
@@ -46,13 +52,11 @@ export default function ProfileInfo({ profile }: Props) {
               <div className="flex flex-col gap-1">
                 <input
                   value={navn}
-                  onChange={e => setNavn(e.target.value)}
-                  className="border border-zinc-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-dark-green w-full mt-1"
+                  onChange={(e) => setNavn(e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-sm focus:border-dark-green focus:outline-none"
                   autoFocus
                 />
-                {error && (
-                  <p className="text-xs text-red-500">{error}</p>
-                )}
+                {error && <p className="text-xs text-red-500">{error}</p>}
               </div>
             ) : (
               <p className="text-sm font-medium text-zinc-800">{profile.navn ?? "Ikke satt"}</p>
@@ -63,17 +67,15 @@ export default function ProfileInfo({ profile }: Props) {
               <button
                 onClick={handleSaveNavn}
                 disabled={loading}
-                className="w-8 h-8 rounded-lg bg-dark-green flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-60"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-dark-green transition-opacity hover:opacity-90 disabled:opacity-60"
+                aria-label="Lagre navn"
               >
                 <Check size={16} className="text-white" />
               </button>
               <button
-                onClick={() => {
-                  setEditingNavn(false);
-                  setNavn(profile.navn ?? "");
-                  setError("");
-                }}
-                className="w-8 h-8 rounded-lg bg-zinc-100 flex items-center justify-center hover:bg-zinc-200 transition-colors"
+                onClick={handleCancel}
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100 transition-colors hover:bg-zinc-200"
+                aria-label="Avbryt"
               >
                 <X size={16} className="text-zinc-600" />
               </button>
@@ -81,7 +83,8 @@ export default function ProfileInfo({ profile }: Props) {
           ) : (
             <button
               onClick={() => setEditingNavn(true)}
-              className="w-8 h-8 rounded-lg bg-zinc-100 flex items-center justify-center hover:bg-zinc-200 transition-colors"
+              className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100 transition-colors hover:bg-zinc-200"
+              aria-label="Rediger navn"
             >
               <Pencil size={16} className="text-zinc-600" />
             </button>
@@ -89,8 +92,8 @@ export default function ProfileInfo({ profile }: Props) {
         </div>
 
         {/* E-post */}
-        <div className="px-6 py-4 flex items-center gap-4">
-          <div className="w-9 h-9 rounded-xl bg-light-green flex items-center justify-center flex-shrink-0">
+        <div className="flex items-center gap-4 px-6 py-4">
+          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-light-green">
             <Mail size={16} className="text-dark-green" />
           </div>
           <div>
@@ -100,8 +103,8 @@ export default function ProfileInfo({ profile }: Props) {
         </div>
 
         {/* Medlem siden */}
-        <div className="px-6 py-4 flex items-center gap-4">
-          <div className="w-9 h-9 rounded-xl bg-light-green flex items-center justify-center flex-shrink-0">
+        <div className="flex items-center gap-4 px-6 py-4">
+          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-light-green">
             <Calendar size={16} className="text-dark-green" />
           </div>
           <div>

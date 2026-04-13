@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { getProfile, Profile } from "@/lib/profile";
+import { type Profile, getProfile } from "@/lib/profile";
 import SettingsSection from "@/components/innstillinger/SettingsSection";
 import UpdateNavnForm from "@/components/innstillinger/UpdateNavnForm";
 import UpdateEmailForm from "@/components/innstillinger/UpdateEmailForm";
@@ -26,49 +26,41 @@ export default function Innstillinger() {
       setProfile(data);
       setLoading(false);
     }
-    fetchProfile();
+    void fetchProfile();
   }, [router]);
 
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <div className="w-8 h-8 border-2 border-dark-green border-t-transparent rounded-full animate-spin" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-dark-green border-t-transparent" />
       </main>
     );
   }
 
   return (
     <main className="min-h-screen bg-zinc-50 pb-16">
-
-      {/* Topp */}
-      <div className="bg-white border-b border-zinc-100 px-8 py-4 2xl:px-16">
-        <Link href="/profil" className="flex items-center gap-2 text-zinc-500 hover:text-dark-green transition-colors text-sm w-fit">
+      <div className="border-b border-zinc-100 bg-white px-8 py-4 2xl:px-16">
+        <Link
+          href="/profil"
+          className="flex w-fit items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-dark-green"
+        >
           <ChevronLeft size={16} />
           Tilbake til profil
         </Link>
       </div>
 
-      <div className="max-w-2xl mx-auto px-8 py-10 flex flex-col gap-6">
+      <div className="mx-auto flex max-w-2xl flex-col gap-6 px-8 py-10">
         <h1 className="text-3xl font-bold text-zinc-900">Innstillinger</h1>
 
-        <SettingsSection
-          title="Navn"
-          description="Oppdater ditt visningsnavn"
-        >
+        <SettingsSection title="Navn" description="Oppdater ditt visningsnavn">
           <UpdateNavnForm currentNavn={profile?.navn} />
         </SettingsSection>
 
-        <SettingsSection
-          title="E-post"
-          description="Oppdater e-postadressen din"
-        >
+        <SettingsSection title="E-post" description="Oppdater e-postadressen din">
           <UpdateEmailForm currentEmail={profile?.email} />
         </SettingsSection>
 
-        <SettingsSection
-          title="Passord"
-          description="Endre passordet ditt"
-        >
+        <SettingsSection title="Passord" description="Endre passordet ditt">
           <UpdatePasswordForm />
         </SettingsSection>
 
@@ -78,7 +70,6 @@ export default function Innstillinger() {
         >
           <DeleteAccountSection />
         </SettingsSection>
-
       </div>
     </main>
   );

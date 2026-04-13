@@ -3,6 +3,14 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
+const PROGRESS_STEPS = [
+  { value: 30, delay: 0 },
+  { value: 70, delay: 100 },
+  { value: 100, delay: 300 },
+] as const;
+
+const RESET_DELAY = 500; // 300ms til 100% + 200ms før reset
+
 export default function LoadingBar() {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -10,28 +18,27 @@ export default function LoadingBar() {
 
   useEffect(() => {
     setLoading(true);
-    setProgress(30);
 
-    const timer1 = setTimeout(() => setProgress(70), 100);
-    const timer2 = setTimeout(() => {
-      setProgress(100);
-      const timer3 = setTimeout(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
+    PROGRESS_STEPS.forEach(({ value, delay }) => {
+      timers.push(setTimeout(() => setProgress(value), delay));
+    });
+
+    timers.push(
+      setTimeout(() => {
         setLoading(false);
         setProgress(0);
-      }, 200);
-      return () => clearTimeout(timer3);
-    }, 300);
+      }, RESET_DELAY)
+    );
 
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
+    return () => timers.forEach(clearTimeout);
   }, [pathname]);
 
   if (!loading) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-full h-1 z-[100]">
+    <div className="fixed left-0 top-0 z-[100] h-1 w-full">
       <div
         className="h-full bg-brand-green transition-all duration-300 ease-out"
         style={{ width: `${progress}%` }}

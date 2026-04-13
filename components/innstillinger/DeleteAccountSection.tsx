@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AlertCircle, Trash2 } from "lucide-react";
 import { deleteAccount } from "@/lib/settings";
-import { useRouter } from "next/navigation";
 
 export default function DeleteAccountSection() {
   const [confirm, setConfirm] = useState(false);
@@ -17,7 +17,8 @@ export default function DeleteAccountSection() {
       await deleteAccount();
       router.push("/");
     } catch (e) {
-      setError(String(e));
+      setError(e instanceof Error ? e.message : "Noe gikk galt. Prøv igjen.");
+    } finally {
       setLoading(false);
     }
   }
@@ -25,7 +26,7 @@ export default function DeleteAccountSection() {
   return (
     <div className="flex flex-col gap-4">
       {error && (
-        <div className="flex items-center gap-2 text-red-700 bg-red-50 border border-red-200 px-4 py-3 rounded-xl text-sm">
+        <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           <AlertCircle size={16} />
           {error}
         </div>
@@ -36,7 +37,7 @@ export default function DeleteAccountSection() {
       {!confirm ? (
         <button
           onClick={() => setConfirm(true)}
-          className="flex items-center gap-2 text-red-600 border border-red-200 px-6 py-3 rounded-xl hover:bg-red-50 transition-all w-fit font-medium text-sm"
+          className="flex w-fit items-center gap-2 rounded-xl border border-red-200 px-6 py-3 text-sm font-medium text-red-600 transition-all hover:bg-red-50"
         >
           <Trash2 size={16} />
           Slett konto
@@ -48,13 +49,13 @@ export default function DeleteAccountSection() {
             <button
               onClick={handleDelete}
               disabled={loading}
-              className="bg-red-600 text-white font-semibold py-2.5 px-6 rounded-xl hover:opacity-90 transition-all text-sm disabled:opacity-60"
+              className="rounded-xl bg-red-600 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-60"
             >
               {loading ? "Sletter..." : "Ja, slett kontoen min"}
             </button>
             <button
               onClick={() => setConfirm(false)}
-              className="border border-zinc-200 text-zinc-700 font-semibold py-2.5 px-6 rounded-xl hover:bg-zinc-50 transition-all text-sm"
+              className="rounded-xl border border-zinc-200 px-6 py-2.5 text-sm font-semibold text-zinc-700 transition-all hover:bg-zinc-50"
             >
               Avbryt
             </button>
