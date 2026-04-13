@@ -24,7 +24,7 @@ export default function FloraKart() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: input,
-          history: messages, // sender samtalehistorikk
+          history: messages,
         }),
       });
 
@@ -53,8 +53,6 @@ export default function FloraKart() {
 
   return (
     <main className="flex flex-col h-screen px-16 py-8 gap-6 2xl:px-32">
-
-      {/* Topp */}
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold">FloraKart</h1>
         <p className="text-zinc-600">
@@ -62,7 +60,6 @@ export default function FloraKart() {
         </p>
       </div>
 
-      {/* Meldinger */}
       <div className="flex-1 flex flex-col gap-4 overflow-y-auto bg-zinc-50 rounded-xl p-6">
         {messages.length === 0 && (
           <div className="flex flex-col gap-3 text-zinc-400 text-sm">
@@ -108,7 +105,6 @@ export default function FloraKart() {
         )}
       </div>
 
-      {/* Input */}
       <div className="flex gap-3">
         <input
           type="text"
@@ -127,7 +123,6 @@ export default function FloraKart() {
           Send
         </button>
       </div>
-
     </main>
   );
 }

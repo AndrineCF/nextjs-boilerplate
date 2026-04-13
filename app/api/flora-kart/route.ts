@@ -14,10 +14,8 @@ export async function POST(request: Request) {
       return Response.json({ error: "Melding mangler." }, { status: 400 });
     }
 
-    // 1. Embed spørsmålet
     const queryEmbedding = await EMBEDDING_MODEL.embedQuery(message);
 
-    // 2. Hent relevante planter fra Supabase
     const { data: documents, error: supabaseError } = await supabase.rpc(
       "match_documents",
       {
@@ -28,17 +26,17 @@ export async function POST(request: Request) {
     );
 
     if (supabaseError) {
+      console.error("Supabase feil:", supabaseError);
       return Response.json({ error: supabaseError.message }, { status: 500 });
     }
 
+    console.log("Antall dokumenter hentet:", documents?.length ?? 0);
 
-    // 3. Bygg kontekst fra dokumentene
     const context =
       documents
         ?.map((d: { content: string }) => d.content)
         .join("\n---\n") ?? "";
 
-    // 4. Send til Groq med historikk og kontekst
     const response = await LLM.invoke(
       message,
       history,
@@ -62,6 +60,7 @@ Basér svaret ditt KUN på plantene listet ovenfor. Ikke nevn andre planter.`
 
     return Response.json({ response });
   } catch (error) {
+    console.error("Feil:", error);
     return Response.json({ error: String(error) }, { status: 500 });
   }
 }

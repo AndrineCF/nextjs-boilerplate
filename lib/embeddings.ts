@@ -1,38 +1,52 @@
-import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
-import { Embeddings } from "@langchain/core/embeddings";
-
-// ─── Typer ───────────────────────────────────────────────────────────────────
-
-interface EmbeddingsConfig {
-  modelName: string;
-  apiKey?: string;
+export interface Message {
+  role: "user" | "assistant";
+  content: string;
 }
 
-// ─── Klasse ───────────────────────────────────────────────────────────────────
+export class LlmGroq {
+  private apiKey: string;
+  private model: string;
 
-export class SentenceTransformerEmbeddings extends Embeddings {
-  private apiModel: HuggingFaceInferenceEmbeddings;
-
-  constructor(config: EmbeddingsConfig) {
-    super({});
-
-    console.log("🌐 Using HuggingFace Inference API...");
-    this.apiModel = new HuggingFaceInferenceEmbeddings({
-      apiKey: config.apiKey ?? process.env.HUGGINGFACEHUB_API_TOKEN,
-      model: config.modelName,
-    });
-    console.log("✅ API embeddings ready");
+  constructor(model: string) {
+    this.apiKey = process.env.GROQ_API_KEY ?? "";
+    this.model = model;
   }
 
-  getModel() {
-    return this.apiModel;
-  }
+  async invoke(
+    message: string,
+    history: Message[] = [],
+    systemPrompt?: string
+  ): Promise<string> {
+    const response = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: this.model,
+          messages: [
+            {
+              role: "system",
+              content: systemPrompt ?? "Du er en hjelpsom assistent for GrøntTak.",
+            },
+            ...history,
+            { role: "user", content: message },
+          ],
+          max_tokens: 512,
+          temperature: 0.5,
+        }),
+      }
+    );
 
-  async embedDocuments(documents: string[]): Promise<number[][]> {
-    return this.apiModel.embedDocuments(documents);
-  }
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Groq API feil: ${response.status} – ${error}`);
+    }
 
-  async embedQuery(query: string): Promise<number[]> {
-    return this.apiModel.embedQuery(query);
+    const data = await response.json();
+    return data.choices[0].message.content ?? "Ingen respons fra modellen.";
   }
 }
