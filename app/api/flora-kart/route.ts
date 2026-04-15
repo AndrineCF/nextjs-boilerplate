@@ -2,9 +2,36 @@ import { LLM, EMBEDDING_MODEL } from "@/lib/config";
 import { getSupabase } from "@/lib/supabase";
 import { type Message } from "@/lib/llm";
 
+// Konverterer norsk plantenavn til URL for bildet i public/planter/
+function findImageUrl(norskNavn: string): string {
+  const filnavn = norskNavn.trim().charAt(0).toUpperCase() + norskNavn.trim().slice(1);
+  return `/planter/${filnavn}.png`;
+}
+
+// Sjekker hvilke av de hentede plantene som faktisk nevnes i LLM-svaret
+function findMentionedPlants(
+  response: string,
+  documents: { metadata: { norsk_navn?: string } }[]
+): { navn: string; imageUrl: string }[] {
+  const responseLower = response.toLowerCase();
+
+  return documents
+    .filter((doc) => {
+      const navn = doc.metadata?.norsk_navn;
+      if (!navn) return false;
+      // Sjekk om plantenavnet finnes i svaret
+      return responseLower.includes(navn.toLowerCase());
+    })
+    .map((doc) => ({
+      navn: doc.metadata.norsk_navn!,
+      imageUrl: findImageUrl(doc.metadata.norsk_navn!),
+    }));
+}
+
 export async function POST(request: Request) {
   try {
     const supabase = await getSupabase();
+
     const {
       message,
       history = [],
@@ -14,8 +41,10 @@ export async function POST(request: Request) {
       return Response.json({ error: "Melding mangler." }, { status: 400 });
     }
 
+    // Embed brukerens spørsmål til en vektor for similarity search
     const queryEmbedding = await EMBEDDING_MODEL.embedQuery(message);
 
+    // Søk i Supabase etter de 5 mest relevante plantene
     const { data: documents, error: supabaseError } = await supabase.rpc(
       "match_documents",
       {
@@ -32,11 +61,13 @@ export async function POST(request: Request) {
 
     console.log("Antall dokumenter hentet:", documents?.length ?? 0);
 
+    // Slå sammen innholdet fra alle dokumenter til én konteksttekst
     const context =
       documents
         ?.map((d: { content: string }) => d.content)
         .join("\n---\n") ?? "";
 
+    // Send spørsmål, historikk og plantekontekst til Groq
     const response = await LLM.invoke(
       message,
       history,
@@ -58,7 +89,11 @@ ${context === ""
 Basér svaret ditt KUN på plantene listet ovenfor. Ikke nevn andre planter.`
     );
 
-    return Response.json({ response });
+    // Finn alle planter som faktisk ble nevnt i svaret og hent bilder
+    const mentionedPlants = findMentionedPlants(response, documents ?? []);
+    console.log("Nevnte planter:", mentionedPlants.map((p) => p.navn));
+
+    return Response.json({ response, plants: mentionedPlants });
   } catch (error) {
     console.error("Feil:", error);
     return Response.json({ error: String(error) }, { status: 500 });

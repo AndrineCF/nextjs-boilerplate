@@ -1,17 +1,27 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { type Message } from "@/lib/llm";
 
+interface Plant {
+  navn: string;
+  imageUrl: string;
+}
+
+interface ChatMessage extends Message {
+  plants?: Plant[];
+}
+
 export default function FloraKart() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function sendMessage() {
     if (!input.trim()) return;
 
-    const userMessage: Message = { role: "user", content: input };
+    const userMessage: ChatMessage = { role: "user", content: input };
     const updatedMessages = [...messages, userMessage];
 
     setMessages(updatedMessages);
@@ -24,7 +34,7 @@ export default function FloraKart() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: input,
-          history: messages,
+          history: messages.map(({ role, content }) => ({ role, content })),
         }),
       });
 
@@ -38,7 +48,11 @@ export default function FloraKart() {
       } else {
         setMessages([
           ...updatedMessages,
-          { role: "assistant", content: data.response },
+          {
+            role: "assistant",
+            content: data.response,
+            plants: data.plants ?? [],
+          },
         ]);
       }
     } catch {
@@ -88,13 +102,46 @@ export default function FloraKart() {
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`px-4 py-3 rounded-xl max-w-2xl whitespace-pre-wrap ${
-              msg.role === "user"
-                ? "bg-dark-green text-white self-end"
-                : "bg-light-green self-start"
+            className={`flex flex-col gap-2 max-w-2xl ${
+              msg.role === "user" ? "self-end items-end" : "self-start items-start"
             }`}
           >
-            {msg.content}
+            {/* Tekstboblen */}
+            <div
+              className={`px-4 py-3 rounded-xl whitespace-pre-wrap ${
+                msg.role === "user"
+                  ? "bg-dark-green text-white"
+                  : "bg-light-green"
+              }`}
+            >
+              {msg.content}
+            </div>
+
+            {/* Bilderekke for alle nevnte planter */}
+            {msg.plants && msg.plants.length > 0 && (
+              <div className="flex flex-wrap gap-3 mt-1">
+                {msg.plants.map((plant) => (
+                  <div key={plant.navn} className="flex flex-col items-center gap-1">
+                    <div className="rounded-xl overflow-hidden w-36 h-28 relative">
+                      <Image
+                        src={plant.imageUrl}
+                        alt={plant.navn}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          // Skjuler bildet hvis filen ikke finnes
+                          (e.target as HTMLImageElement).closest("div")!.style.display = "none";
+                        }}
+                      />
+                    </div>
+                    {/* Plantenavn under bildet */}
+                    <span className="text-xs text-zinc-500 capitalize">
+                      {plant.navn}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
 
