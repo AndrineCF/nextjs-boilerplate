@@ -9,9 +9,9 @@ const SECTIONS = [
     imageAlt: "Plantevalgapp med solskinn og luft",
     imageRight: false,
     paragraphs: [
-      "Verktøyet vårt gjør det enklere å velge riktige arter ved å samle relevante plantealternativer og gjøre dem søkbare og sammenlignbare. Du kan filtrere og velge ut fra faktorer som sol, vind, jorddybde, veksthøyde, etableringsmetode, driftstype, samt pollinatorverdi og økologisk rolle.",
-      "I takt med fortetting og færre grønne flater er grønne tak et viktig miljøtiltak i byer fordi de styrker lokal flora og biologisk mangfold ved å skape nye leveområder for planter og insekter.",
-      "Resultatet er et mer treffsikkert plantevalg bidrar til å oppnå prosjektmålene, enten det er lavt vedlikehold, estetikk eller høy natur- og miljøverdi.",
+      "Verktøyet vårt gjør det enklere å velge riktige plantearter ved å samle relevante alternativer og gjøre dem søkbare og sammenlignbare. Gjennom dialog får du forslag basert på forhold som solforhold, vindeksponering, jorddybde, veksthøyde, etableringsmetode, vedlikeholdsbehov og pollinatorverdi.",
+      "I takt med økende fortetting og færre grønne flater blir det viktig å integrere natur i det vi bygger. Grønne tak kan bidra til å styrke biologisk mangfold ved å skape nye leveområder for planter og insekter.",
+      "Ved å gjøre riktige plantevalg mer tilgjengelige i tidlig fase, kan verktøyet bidra til mer miljøvennlige byggeprosjekter og gjøre det enklere å oppfylle relevante miljøkrav. Resultatet er et mer treffsikkert plantevalg som gjør det enklere å nå prosjektmål, enten det gjelder lavt vedlikehold, estetikk eller økt økologisk verdi."
     ],
   },
   {
@@ -32,9 +32,10 @@ const SECTIONS = [
     imageAlt: "Grønne tak og smarte valg",
     imageRight: true,
     paragraphs: [
-      "Valg av planter til grønne tak påvirkes av flere forhold og er avgjørende for om taket blir robust og enkelt å drifte. Med riktig artsvalg tilpasset sol, vind, jorddybde og fuktighet får du bedre etablering, jevnere dekke og mindre behov for vanning og etterplanting.",
-      "Ulike prosjekter kan prioritere lavt vedlikehold, et bestemt estetisk uttrykk eller høy økologisk verdi, for eksempel god støtte til pollinatorer. Feil plantevalg gir ofte glisne partier og høyere driftskostnader over tid.",
-    ],
+      "Ved å gjøre riktige plantevalg mer tilgjengelige i tidlig fase, kan verktøyet bidra til mer miljøvennlige byggeprosjekter og gjøre det enklere å oppfylle relevante miljøkrav. Resultatet er et mer treffsikkert plantevalg som gjør det enklere å nå prosjektmål, enten det gjelder lavt vedlikehold, estetikk eller økt økologisk verdi.",
+      "Ulike prosjekter kan prioritere lavt vedlikehold, et bestemt estetisk uttrykk eller økt tilrettelegging for biologisk mangfold, for eksempel gjennom god støtte til pollinatorer. For å oppnå dette er det viktig å bruke planter med lokalt genetisk opphav, slik at de er best mulig tilpasset forholdene og bidrar til å styrke lokale økosystemer.",
+      "For best mulig lokal tilpasning anbefales det å rådføre seg med økologer eller andre fagpersoner som kan gjøre befaring på tomten i tidlig fase. Dette gir et bedre grunnlag for riktige valg"
+   ],
   },
 ] as const;
 
@@ -109,7 +110,8 @@ export default function OmVerktoy() {
     <main className="w-full">
       <Hero
         title="Vårt verktøy"
-        description="Valg av planter til grønne tak avgjør hvor robust og lettdrevet taket blir. Når vegetasjonen tilpasses sol, vind, jorddybde og fuktighet, kan taket tilpasses vedlikeholdønsker, estetikk og ønsket bidrag til det lokale økosystemet. Her vises miljøgevinstene av riktige plantevalg, og hvordan verktøyet vårt hjelper deg å finne arter som passer prosjektet ditt."
+        description="Alle tak har ulike forutsetninger, og plantevalg bør tilpasses deretter. FloraKart tar utgangspunkt i et utvalg arter som egner seg for grønne tak, og gir anbefalinger tilpasset forholdene på ditt spesifikke tak.
+        Dette inkluderer blant annet solforhold, vindeksponering, jorddybde, vedlikeholdsbehov og ønsket uttrykk. Verktøyet gir også innsikt i egenskaper ved de ulike artene, som pollinatorverdi og vekstforhold, slik at du kan ta mer informerte valg"
         imageSrc="/ikoner/plante-verktoy.svg"
         imageAlt="Illustrasjon av folk med planter"
       />

@@ -9,9 +9,8 @@ const SECTIONS = [
     imageAlt: "Grønne tak i by",
     imageRight: false,
     paragraphs: [
-      "Implementering av grønne tak har i de siste år økt i popularitet, spesielt i urbane strøk som en pustende, estetisk og grønn del av bylivet.",
-      "I takt med fortetting og færre grønne flater er grønne tak et viktig miljøtiltak i byer fordi de styrker lokal flora og biologisk mangfold ved å skape nye leveområder for planter og insekter.",
-      "I tillegg til påvist positiv effekt på menneskers mentale helse bidrar vegetasjonen til bedre bymiljø ved å fange svevestøv, binde CO₂ og håndtere overvann.",
+      "Grønne tak har de siste årene blitt stadig mer utbredt, særlig i områder hvor grønne flater er under press. I nyere tid har det vært økende fokus på sedumtak, spesielt knyttet til overvannshåndtering. Dette prosjektet retter derimot oppmerksomheten mot biotoptak og deres potensiale for å styrke biologisk mangfold.",
+      "I takt med økende fortetting og tap av natur blir det stadig viktigere å integrere nye leveområder for planter og insekter i det vi bygger. Biotoptak er utviklet nettopp for dette formålet, ved å etterligne naturlige habitater og styrke biologisk mangfold gjennom bruk av stedegne arter.",
     ],
   },
   {
@@ -20,9 +19,7 @@ const SECTIONS = [
     imageAlt: null,
     imageRight: false,
     paragraphs: [
-      "Datagrunnlaget for verktøyet er basert på artsobservasjoner fra Artsdatabanken, hentet gjennom karttjenesten Artskart. Datasettene ble filtrert til å omfatte karplanter registrert i Trondheim kommune fra 1975 og frem til i dag, noe som ga et utgangspunkt på rundt 70 000 observasjoner.",
-      "For å gjøre datasettet relevant for bruk på grønne tak ble det gjennomført en stegvis filtreringsprosess. Fremmede arter og rødlistede arter (RE, CR, EN og VU) ble fjernet, sammen med arter som ikke egner seg for takmiljøer, som trær, skogbunnsarter og planter med høyt fuktighetsbehov. Videre ble artene vurdert etter stedegenhet og tilpasning til tørre, næringsfattige vekstforhold.",
-      "Til slutt ble listen avgrenset til arter som også er tilgjengelige på markedet. Resultatet er et datasett på 58 stedegne plantearter som kan fungere på grønne tak i Trondheim. For hver art er det lagt til informasjon om blant annet solforhold, jorddybde, vindeksponering, pollinatorverdi og etableringsmetode, slik at de kan filtreres og brukes i planlegging av habitattak.",
+      "Datagrunnlaget for verktøyet er basert på artsobservasjoner fra Artsdatabanken, filtrert til karplanter registrert i Trondheim fra 1975 til i dag. Datasettet er videre renset for fremmede arter, rødlistede arter og arter som ikke egner seg for takmiljøer. De gjenværende artene er vurdert etter egnethet for tørre vekstforhold og tilgjengelighet på markedet. Resultatet er et utvalg stedegne plantearter tilpasset grønne tak, med tilhørende informasjon om blant annet solforhold, jorddybde, vindeksponering og pollinatorverdi."
     ],
   },
 ] as const;
@@ -100,7 +97,7 @@ export default function OmProsjektet() {
     <main className="w-full">
       <Hero
         title="Om prosjektet"
-        description="Prosjektet GrøntTak handler om å gjøre det enklere å velge riktig vegetasjon til grønne tak ut ifra selvvalgte preferanser og behov. Dette innebærer bl.a. anbefalt jorddybde, veksthøyde samt behov for solforhold og vedlikehold."
+        description="GrøntTak har som mål å gjøre det enklere å velge riktig vegetasjon for grønne tak. Verktøyet gir beslutningsstøtte i tidlig fase av byggeprosjekter, og synliggjør hvordan biotoptak kan bidra til økt biologisk mangfold i byer. Basert på brukerens behov og preferanser gir løsningen anbefalinger om plantevalg."
         imageSrc="/img/illustrasjon.png"
         imageAlt="Illustrasjon av folk med planter"
       />

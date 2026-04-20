@@ -38,12 +38,10 @@ function HeroSection() {
           Gjør taket grønt med oss!
         </h1>
         <p className="text-base leading-relaxed md:text-lg">
-          Med GrøntTak får du oversikt over lokal flora, anbefalinger for
-          samplanting og miljøeffekt. Planlegg et grønt tak som styrker
-          biologisk mangfold.
+          Med GrøntTak kan du enkelt forvandle taket ditt til et levende økosystem. Få oversikt over riktige planter og løsninger som styrker biologisk mangfold og gjør byggeprosjekter til en del av løsningen på naturkrisen.
         </p>
         <p className="text-base italic md:text-right md:text-lg">
-          Velg område. Få forslag. Bygg grønnere.
+          Velg smart – bygg grønt.
         </p>
       </div>
     </section>
