@@ -29,8 +29,8 @@ const QUESTIONS = [
     spørsmål: "☀️ Hva slags solforhold har taket ditt?",
     alternativer: [
       { label: "Full sol", value: "Full sol" },
-      { label: "Halvskygge", value: "Halvskygge" },
-      { label: "Full sol – tåler halvskygge", value: "Full sol – tåler halvskygge" },
+      { label: "Skygge", value: "Halvskygge" },
+      { label: "Varierende solforhold", value: "Full sol – tåler halvskygge" },
     ],
   },
   {

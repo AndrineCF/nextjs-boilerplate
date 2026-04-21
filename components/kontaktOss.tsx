@@ -3,10 +3,10 @@ import Img from "@/components/Img";
 
 // ─── Konstanter ─────────────────────────────────────────────────
 const CONTACT_ITEMS = [
-  { icon: "/ikoner/telefon.png", text: "34243242" },
-  { icon: "/ikoner/kart.png", text: "Gløshaug 1, 7030 Trondheim" },
-  { icon: "/ikoner/email.png", text: "kundservice@grøntak.no" },
-  { icon: "/ikoner/klokke.png", text: "man-fre 9-18" },
+  { icon: "/ikoner/telefon.svg", text: "34243242" },
+  { icon: "/ikoner/kart.svg", text: "Gløshaug 1, 7030 Trondheim" },
+  { icon: "/ikoner/email.svg", text: "kundservice@grøntak.no" },
+  { icon: "/ikoner/klokke.svg", text: "man-fre 9-18" },
 ] as const;
 
 // ─── Delkomponenter ─────────────────────────────────────────────

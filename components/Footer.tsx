@@ -11,10 +11,10 @@ const NAV_LINKS = [
 ] as const;
 
 const CONTACT_ITEMS = [
-  { icon: "/ikoner/email.png", text: "kontakt@grøntak.no" },
-  { icon: "/ikoner/telefon.png", text: "34243242" },
-  { icon: "/ikoner/kart.png", text: "Gløshaug 1, 7030 Trondheim" },
-  { icon: "/ikoner/klokke.png", text: "man-fre 9-18" },
+  { icon: "/ikoner/email.svg", text: "kontakt@grøntak.no" },
+  { icon: "/ikoner/telefon.svg", text: "34243242" },
+  { icon: "/ikoner/kart.svg", text: "Gløshaug 1, 7030 Trondheim" },
+  { icon: "/ikoner/klokke.svg", text: "man-fre 9-18" },
 ] as const;
 
 const LINK_CLASS = "text-sm text-zinc-700 transition-colors hover:text-brand-green";
@@ -72,8 +72,11 @@ export default function Footer() {
         <div className="h-px w-full bg-brand-green opacity-20" />
 
         <div className="flex flex-col gap-2 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2025 GrøntTak. Alle rettigheter reservert.</span>
-          <span>Laget med ❤️ for miljøet</span>
+          <span>
+            <p>Nettsiden er laget for TDT4857 Eksperter i team - Bærekraftige transformasjoner gjennom kreativitet med KI</p>
+            <p>KI er brukt for å lage bilde og nettsiden</p>
+            <p>© 2025 GrøntTak. Alle rettigheter reservert.</p>
+          </span>
         </div>
       </div>
     </footer>

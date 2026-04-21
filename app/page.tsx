@@ -3,9 +3,9 @@ import KontaktOss from "@/components/kontaktOss";
 
 // ─── Konstanter ────────────────────────────────────────────────
 const FEATURES = [
-  { src: "/ikoner/kart.png", label: "Lokal tilpasning" },
-  { src: "/ikoner/plante.png", label: "Smarte plantevalg" },
-  { src: "/ikoner/jordklode.png", label: "Miljøgevinst" },
+  { src: "/ikoner/kart.svg", label: "Lokal tilpasning" },
+  { src: "/ikoner/plante.svg", label: "Smarte plantevalg" },
+  { src: "/ikoner/jordklode.svg", label: "Miljøgevinst" },
 ] as const;
 
 // ─── Delkomponenter ─────────────────────────────────────────────
@@ -85,7 +85,7 @@ function ToolSection() {
           </a>
         </div>
         <div className="flex flex-shrink-0 justify-center">
-          <Image src="/ikoner/verktoy.png" alt="" width={100} height={100} aria-hidden />
+          <Image src="/ikoner/verktoy.svg" alt="" width={100} height={100} aria-hidden />
         </div>
       </div>
     </section>

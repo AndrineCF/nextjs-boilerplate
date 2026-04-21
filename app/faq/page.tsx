@@ -12,8 +12,10 @@ export default function FAQ() {
         imageSrc="/img/faq.png"
         imageAlt="Illustrasjon av FAQ med snakkeboble, forstørrelsesglass og plantebok."
       />
-      <section className="px-16 py-16 2xl:px-32">
-        <div className="flex max-w-3xl flex-col gap-12">
+
+      {/* FAQ-seksjonen */}
+      <section className="px-16 py-20 2xl:px-32 bg-white">
+        <div className="flex flex-col gap-12 mx-auto max-w-3xl">
           {kategorier.map((kategori) => (
             <FAQKategori
               key={kategori}
@@ -23,6 +25,8 @@ export default function FAQ() {
           ))}
         </div>
       </section>
+
+
       <KontaktOss />
     </main>
   );

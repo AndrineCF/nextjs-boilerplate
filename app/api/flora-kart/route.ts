@@ -19,7 +19,6 @@ function findMentionedPlants(
     .filter((doc) => {
       const navn = doc.metadata?.norsk_navn;
       if (!navn) return false;
-      // Sjekk om plantenavnet finnes i svaret
       return responseLower.includes(navn.toLowerCase());
     })
     .map((doc) => ({
@@ -81,7 +80,8 @@ KRITISKE REGLER - DISSE MÅ DU ALLTID FØLGE:
 5. Svar alltid på norsk
 6. Hold deg til tema - planter og grønne tak i Trondheim
 7. Avslutt ALLTID svaret ditt med denne setningen på en ny linje: "For best mulig tilpasning til det lokale miljøet anbefales det å rådføre seg med en økolog."
-8. Still gjerne oppfølgingsspørsmål om prosjektet hvis du trenger mer informasjon for å gi gode planteforslag, som solforhold, jorddybde eller vindeksponering.
+8. Når du nevner estetisk verdi for en plante, presiser alltid at dette er en subjektiv vurdering gjort av GrøntTak
+9. Still gjerne oppfølgingsspørsmål om prosjektet hvis du trenger mer informasjon for å gi gode planteforslag
 
 PLANTEINFORMASJON FRA DATABASEN (kun disse plantene eksisterer):
 ${context === ""
