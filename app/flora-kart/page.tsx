@@ -17,11 +17,8 @@ interface ChatMessage extends Message {
 
 interface UserProfile {
   solforhold?: string;
-  jorddybde?: string;
   vindeksponering?: string;
-  pollinatorverdi?: string;
-  driftstype?: string;
-  estetisk?: string;
+  oppholdssted?: string;
 }
 
 // ─── Onboarding-spørsmål ─────────────────────────────────────────────────────
@@ -29,20 +26,11 @@ interface UserProfile {
 const QUESTIONS = [
   {
     key: "solforhold",
-    spørsmål: "☀️ Hvor mye sol får taket ditt?",
+    spørsmål: "☀️ Hva slags solforhold har taket ditt?",
     alternativer: [
       { label: "Full sol", value: "Full sol" },
       { label: "Halvskygge", value: "Halvskygge" },
       { label: "Full sol – tåler halvskygge", value: "Full sol – tåler halvskygge" },
-    ],
-  },
-  {
-    key: "jorddybde",
-    spørsmål: "🌱 Hvor dypt er jordlaget på taket?",
-    alternativer: [
-      { label: "Grunt (5–10 cm)", value: "5–10 cm" },
-      { label: "Middels (10–20 cm)", value: "10–20 cm" },
-      { label: "Dypt (15–30 cm)", value: "15–30 cm" },
     ],
   },
   {
@@ -55,30 +43,11 @@ const QUESTIONS = [
     ],
   },
   {
-    key: "pollinatorverdi",
-    spørsmål: "🐝 Ønsker du planter som er gode for pollinatorer?",
+    key: "oppholdssted",
+    spørsmål: "🏡 Skal taket brukes som oppholdssted?",
     alternativer: [
-      { label: "Ja, høy pollinatorverdi", value: "Høy" },
-      { label: "Middels pollinatorverdi", value: "Middels" },
-      { label: "Ikke viktig", value: "Lav" },
-    ],
-  },
-  {
-    key: "driftstype",
-    spørsmål: "🔧 Hvor mye vedlikehold kan du gjøre?",
-    alternativer: [
-      { label: "Nesten ingen – vedlikeholdsfritt", value: "Nesten vedlikeholdsfri" },
-      { label: "Litt – årlig slått", value: "Årlig slått anbefales" },
-      { label: "Mer – krever oppfølging", value: "Krever oppfølging" },
-    ],
-  },
-  {
-    key: "estetisk",
-    spørsmål: "🌸 Hvor viktig er det estetiske utseendet?",
-    alternativer: [
-      { label: "Veldig viktig – høy estetisk verdi", value: "Høy" },
-      { label: "Middels viktig", value: "Middels" },
-      { label: "Ikke viktig", value: "Lav" },
+      { label: "Ja", value: "ja" },
+      { label: "Nei", value: "nei" },
     ],
   },
 ];
@@ -86,25 +55,50 @@ const QUESTIONS = [
 // ─── Komponent ────────────────────────────────────────────────────────────────
 
 export default function FloraKart() {
-  const [step, setStep] = useState(0); // Hvilket onboarding-spørsmål vi er på
+  const [step, setStep] = useState(0);
   const [profile, setProfile] = useState<UserProfile>({});
   const [onboardingDone, setOnboardingDone] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  // Velkomstmeldinger er lagret i staten fra start så de aldri forsvinner
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      role: "assistant",
+      content: `Hei! Jeg er FloraKart-assistenten for GrøntTak. 🌿\n\nJeg stiller deg noen korte spørsmål om taket ditt, så finner jeg de best egnede plantene for deg.`,
+    },
+    {
+      role: "assistant",
+      content: QUESTIONS[0].spørsmål,
+    },
+  ]);
+
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
+
+  // ── Bygg profilmelding til API ─────────────────────────────────────────────
+  function buildProfileMessage(p: UserProfile): string {
+    const estetikkInfo =
+      p.oppholdssted === "ja"
+        ? "Taket skal brukes som oppholdssted, så estetikk er viktig (høy eller middels estetisk verdi)."
+        : "Taket skal ikke brukes som oppholdssted, så alle planter kan vurderes uavhengig av estetikk.";
+
+    return `Mitt tak har følgende egenskaper:
+- Solforhold: ${p.solforhold}
+- Vindeksponering: ${p.vindeksponering}
+- ${estetikkInfo}
+
+Hvilke planter anbefaler du? Inkluder gjerne info om anbefalt substratdybde, vedlikeholdsbehov og pollinatorverdi for hver plante.`;
+  }
 
   // ── Velg svar i onboarding ─────────────────────────────────────────────────
   async function handleOnboardingAnswer(key: string, value: string) {
     const updatedProfile = { ...profile, [key]: value };
     setProfile(updatedProfile);
 
-    const currentQuestion = QUESTIONS[step];
-    const chosenLabel = currentQuestion.alternativer.find(
+    const chosenLabel = QUESTIONS[step].alternativer.find(
       (a) => a.value === value
     )?.label;
 
-    // Legg til bruker- og assistentmelding i chatten
     const userMsg: ChatMessage = {
       role: "user",
       content: chosenLabel ?? value,
@@ -113,22 +107,23 @@ export default function FloraKart() {
     if (step < QUESTIONS.length - 1) {
       // Gå til neste spørsmål
       const nextQuestion = QUESTIONS[step + 1];
-      const assistantMsg: ChatMessage = {
-        role: "assistant",
-        content: nextQuestion.spørsmål,
-      };
-      setMessages((prev) => [...prev, userMsg, assistantMsg]);
+      setMessages((prev) => [
+        ...prev,
+        userMsg,
+        { role: "assistant", content: nextQuestion.spørsmål },
+      ]);
       setStep(step + 1);
     } else {
-      // Onboarding ferdig – send profilen til API og start chat
-      const assistantMsg: ChatMessage = {
-        role: "assistant",
-        content: "Takk! Jeg har nå nok informasjon til å finne de beste plantene for taket ditt. 🌿",
-      };
-      setMessages((prev) => [...prev, userMsg, assistantMsg]);
+      // Onboarding ferdig
+      setMessages((prev) => [
+        ...prev,
+        userMsg,
+        {
+          role: "assistant",
+          content: "Takk! Jeg finner de beste plantene for taket ditt nå. 🌿",
+        },
+      ]);
       setOnboardingDone(true);
-
-      // Send automatisk en melding med profilen til API
       await sendProfileToApi(updatedProfile);
     }
   }
@@ -136,25 +131,13 @@ export default function FloraKart() {
   // ── Send profil til API ────────────────────────────────────────────────────
   async function sendProfileToApi(p: UserProfile) {
     setLoading(true);
-
-    const profileMessage = `Mitt tak har følgende egenskaper:
-- Solforhold: ${p.solforhold}
-- Jorddybde: ${p.jorddybde}
-- Vindeksponering: ${p.vindeksponering}
-- Ønsket pollinatorverdi: ${p.pollinatorverdi}
-- Vedlikeholdsnivå: ${p.driftstype}
-- Estetisk verdi: ${p.estetisk}
-
-Hvilke planter anbefaler du?`;
+    const profileMessage = buildProfileMessage(p);
 
     try {
       const response = await fetch("/api/flora-kart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: profileMessage,
-          history: [],
-        }),
+        body: JSON.stringify({ message: profileMessage, history: [] }),
       });
 
       const data = await response.json();
@@ -218,8 +201,6 @@ Hvilke planter anbefaler du?`;
     }
   }
 
-  const currentQuestion = QUESTIONS[step];
-
   return (
     <main className="flex flex-col h-screen px-16 py-8 gap-6 2xl:px-32">
 
@@ -265,19 +246,7 @@ Hvilke planter anbefaler du?`;
       {/* ── Chat ──────────────────────────────────────────────────────────── */}
       <div className="flex-1 flex flex-col gap-4 overflow-y-auto bg-zinc-50 rounded-xl p-6">
 
-        {/* Velkomstmelding + første spørsmål */}
-        {messages.length === 0 && (
-          <div className="self-start flex flex-col gap-4 max-w-2xl">
-            <div className="bg-light-green px-4 py-3 rounded-xl whitespace-pre-wrap">
-              {`Hei! Jeg er FloraKart-assistenten for GrøntTak. 🌿\n\nJeg stiller deg noen korte spørsmål om taket ditt, så finner jeg de best egnede plantene for deg.`}
-            </div>
-            <div className="bg-light-green px-4 py-3 rounded-xl">
-              {currentQuestion.spørsmål}
-            </div>
-          </div>
-        )}
-
-        {/* Tidligere meldinger */}
+        {/* Meldinger */}
         {messages.map((msg, i) => (
           <div
             key={i}
@@ -334,10 +303,10 @@ Hvilke planter anbefaler du?`;
         {/* Onboarding-knapper */}
         {!onboardingDone && !loading && (
           <div className="flex flex-wrap gap-2 mt-2">
-            {currentQuestion.alternativer.map((alt) => (
+            {QUESTIONS[step].alternativer.map((alt) => (
               <button
                 key={alt.value}
-                onClick={() => handleOnboardingAnswer(currentQuestion.key, alt.value)}
+                onClick={() => handleOnboardingAnswer(QUESTIONS[step].key, alt.value)}
                 className="border border-dark-green text-dark-green px-4 py-2 rounded-xl hover:bg-dark-green hover:text-white transition-colors text-sm"
               >
                 {alt.label}
@@ -347,7 +316,7 @@ Hvilke planter anbefaler du?`;
         )}
       </div>
 
-      {/* ── Input (vises kun etter onboarding) ────────────────────────────── */}
+      {/* ── Input (kun etter onboarding) ──────────────────────────────────── */}
       {onboardingDone && (
         <div className="flex gap-3">
           <input
