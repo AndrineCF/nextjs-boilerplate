@@ -18,6 +18,7 @@ interface ChatMessage extends Message {
 interface UserProfile {
   solforhold?: string;
   vindeksponering?: string;
+  jorddybde?: string;
   oppholdssted?: string;
 }
 
@@ -40,6 +41,15 @@ const QUESTIONS = [
       { label: "Lite vind", value: "Lav" },
       { label: "Middels vind", value: "Middels" },
       { label: "Mye vind", value: "Høy" },
+    ],
+  },
+  {
+    key: "jorddybde",
+    spørsmål: "🌱 Hvor dypt er jordlaget på taket?",
+    alternativer: [
+      { label: "Grunt (5–10 cm)", value: "5–10 cm" },
+      { label: "Middels (10–20 cm)", value: "10–20 cm" },
+      { label: "Dypt (15–30 cm)", value: "15–30 cm" },
     ],
   },
   {
@@ -85,6 +95,7 @@ export default function FloraKart() {
     return `Mitt tak har følgende egenskaper:
 - Solforhold: ${p.solforhold}
 - Vindeksponering: ${p.vindeksponering}
+- Jorddybde: ${p.jorddybde}
 - ${estetikkInfo}
 
 Hvilke planter anbefaler du? Inkluder gjerne info om anbefalt substratdybde, vedlikeholdsbehov og pollinatorverdi for hver plante.`;
